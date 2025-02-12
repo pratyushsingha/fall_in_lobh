@@ -31,13 +31,13 @@ const EmotiveFace = ({ mood = "happy", noCount = 0 }) => {
 
   const getMoodEmoji = () => {
     if (mood === "celebration") return expressions.celebration;
-    if (mood === "question") return expressions.question;
     if (noCount > 0) {
       if (noCount >= 10) return expressions.sad4;
       if (noCount >= 7) return expressions.sad3;
       if (noCount >= 4) return expressions.sad2;
       return expressions.sad1;
     }
+    if (mood === "question") return expressions.question;
     return expressions[mood];
   };
 

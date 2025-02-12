@@ -4,6 +4,7 @@ export function middleware(request: NextRequest) {
   const url = request.nextUrl;
   const hostname = request.headers.get("host") || "";
   console.log("hostname", hostname);
+  console.log("url", url);
 
   if (url.pathname.startsWith("/api")) {
     return NextResponse.next();
@@ -15,7 +16,11 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
   if (hostname.startsWith("localhost")) {
-    url.pathname = `/sites/lordzenux`;
+    if (url.pathname === "/") {
+      url.pathname = "/sites/lordzenux";
+    }
+    // url.pathname = `/sites/lordzenux`;
+    
     return NextResponse.rewrite(url);
   }
 
