@@ -122,12 +122,13 @@ export default function Home() {
 
   const messages = [
     `Welcome, ${subdomain} ! 👑`,
-    "Your presence brightens my day...",
-    "Every moment is magical ✨",
-    "You're absolutely incredible 🌟",
-    "Together, we create perfection 🎵",
-    "Will you be my Valentine? 🌹",
+    `Your presence brightens my day...`,
+    `Every moment is magical ✨`,
+    `You're absolutely incredible 🌟`,
+    `Together, we create perfection 🎵`,
+    `Will you be my Valentine? 🌹`,
   ];
+
 
   const emojis = ["💖", "✨", "🌹", "💝", "🎵", "🦋", "🌈", "💫", "🎀"];
 
@@ -150,6 +151,7 @@ export default function Home() {
   ];
 
   useEffect(() => {
+  
     if (showEmojis) {
       const timer = setInterval(() => {
         setStep((prev) => (prev < messages.length - 1 ? prev + 1 : prev));
