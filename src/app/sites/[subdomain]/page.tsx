@@ -2,9 +2,27 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
-import { Heart, Stars, Sparkles, Music, Gift, XCircle } from "lucide-react";
+import { Heart, Sparkles, XCircle } from "lucide-react";
+import { useParams } from "next/navigation";
 
-const FloatingEmoji = ({ emoji, delay = 0 }) => (
+interface Sparkle {
+  id: number;
+  x: number;
+  y: number;
+}
+
+interface MousePosition {
+  x: number;
+  y: number;
+}
+
+const FloatingEmoji = ({
+  emoji,
+  delay = 0,
+}: {
+  emoji: string;
+  delay?: number;
+}) => (
   <motion.div
     initial={{ y: "100vh", x: Math.random() * window.innerWidth, rotate: 0 }}
     animate={{
@@ -49,7 +67,7 @@ const ColorBubble = ({ delay = 0 }) => (
   />
 );
 
-const SparkleEffect = ({ x, y }) => (
+const SparkleEffect = ({ x, y }: { x: number; y: number }) => (
   <motion.div
     initial={{ scale: 0, opacity: 0 }}
     animate={{
@@ -90,13 +108,15 @@ const textVariants = {
   },
 };
 
-export default function Home({ params }) {
-  const { subdomain } = params;
+export default function Home() {
+  const { subdomain } = useParams();
   const [step, setStep] = useState(0);
   const [showEmojis, setShowEmojis] = useState(false);
-  const [sparkles, setSparkles] = useState([]);
+  const [sparkles, setSparkles] = useState<
+    { id: number; x: number; y: number }[]
+  >([]);
   const [noCount, setNoCount] = useState(0);
-  const noButtonRef = useRef(null);
+  const noButtonRef = useRef<HTMLButtonElement>(null);
   const noButtonControls = useAnimation();
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -138,16 +158,17 @@ export default function Home({ params }) {
     }
   }, [showEmojis, messages.length]);
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (Math.random() > 0.8) {
-      const newSparkle = {
+      const newSparkle: Sparkle = {
         id: Date.now(),
         x: e.clientX,
         y: e.clientY,
       };
       setSparkles((prev) => [...prev.slice(-5), newSparkle]);
     }
-    setMousePos({ x: e.clientX, y: e.clientY });
+    const newMousePos: MousePosition = { x: e.clientX, y: e.clientY };
+    setMousePos(newMousePos);
   };
 
   const handleNoButtonHover = async () => {

@@ -1,11 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
 import { websiteSchema } from "@/schema/schema";
 
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(req, { params }) {
   try {
     const { id } = params;
     if (!id) {
@@ -37,7 +34,7 @@ export async function PUT(
     const updatedWebsite = await prisma.website.update({
       where: {
         id: Number(id),
-      }, 
+      },
       data: data.data,
     });
 
