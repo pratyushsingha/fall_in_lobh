@@ -45,6 +45,7 @@ export default function Home() {
     <Temp1
       messages={messages}
       moods={moods}
+      prev={false}
       noButtonMessages={noButtonMessages}
       celebrationMediaUrl={celebrationMediaUrl}
       celebrationMessage={celebrationMessage}

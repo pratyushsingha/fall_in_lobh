@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { Heart, Sparkles, XCircle, Code } from "lucide-react";
 import Image from "next/image";
+import { boolean } from "zod";
 
 interface Sparkle {
   id: number;
@@ -14,6 +15,7 @@ interface Sparkle {
 interface Temp1Props {
   messages: string[];
   moods: string[];
+  prev: boolean;
   noButtonMessages: string[];
   celebrationMediaUrl: string;
   celebrationMessage: string;
@@ -38,6 +40,7 @@ const Logo = () => (
 const EmotiveFace = ({
   mood = "happy",
   noCount = 0,
+
 }: {
   mood?: string;
   noCount?: number;
@@ -300,13 +303,7 @@ const textVariants = {
   },
 };
 
-export default function Temp1({
-  messages,
-  moods,
-  noButtonMessages,
-  celebrationMediaUrl,
-  celebrationMessage,
-}: Temp1Props) {
+export default function Temp1({ messages, moods, prev = false, noButtonMessages, celebrationMediaUrl, celebrationMessage }: Temp1Props) {
   const [step, setStep] = useState(0);
   const [showEmojis, setShowEmojis] = useState(false);
   const [sparkles, setSparkles] = useState<Sparkle[]>([]);
@@ -363,15 +360,11 @@ export default function Temp1({
   if (!showEmojis) {
     return (
       <div
-        className="min-h-[100dvh] flex items-center justify-center p-4 overflow-hidden bg-gradient-to-br from-pink-400 to-pink-600"
+        className={`flex items-center justify-center p-4 overflow-hidden bg-gradient-to-br from-pink-400 to-pink-600 ${prev ? "min-h-[60dvh]" : "min-h-[100dvh]"}`}
         onMouseMove={handleMouseMove}
       >
         <Logo />
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="text-center relative"
-        >
+        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center relative">
           {sparkles.map((sparkle) => (
             <SparkleEffect key={sparkle.id} x={sparkle.x} y={sparkle.y} />
           ))}
@@ -403,10 +396,7 @@ export default function Temp1({
   }
 
   return (
-    <div
-      className="min-h-[100dvh] overflow-hidden relative bg-gradient-to-br from-pink-400 to-pink-600"
-      onMouseMove={handleMouseMove}
-    >
+    <div className="min-h-[100dvh] overflow-hidden relative bg-gradient-to-br from-pink-400 to-pink-600" onMouseMove={handleMouseMove}>
       <Logo />
       {sparkles.map((sparkle) => (
         <SparkleEffect key={sparkle.id} x={sparkle.x} y={sparkle.y} />
@@ -417,11 +407,7 @@ export default function Temp1({
       ))}
 
       {Array.from({ length: 6 }).map((_, i) => (
-        <FloatingEmoji
-          key={`emoji-${i}`}
-          emoji={emojis[i % emojis.length]}
-          delay={i * 0.3}
-        />
+        <FloatingEmoji key={`emoji-${i}`} emoji={emojis[i % emojis.length]} delay={i * 0.3} />
       ))}
 
       <AnimatePresence mode="wait">
@@ -437,12 +423,7 @@ export default function Temp1({
           }}
           className="absolute inset-0 flex items-center justify-center p-4"
         >
-          <motion.div
-            className="text-center text-white"
-            initial={{ y: 20, rotateX: 90 }}
-            animate={{ y: 0, rotateX: 0 }}
-            transition={{ type: "spring", stiffness: 200 }}
-          >
+          <motion.div className="text-center text-white" initial={{ y: 20, rotateX: 90 }} animate={{ y: 0, rotateX: 0 }} transition={{ type: "spring", stiffness: 200 }}>
             <EmotiveFace mood={moods[step]} noCount={noCount} />
             <motion.div className="perspective-text">
               {Array.from(messages[step]).map((char, i) =>
@@ -487,10 +468,7 @@ export default function Temp1({
                   }}
                   whileTap={{ scale: 0.9 }}
                   animate={{
-                    scale:
-                      yesButtonScales[
-                        Math.min(noCount, yesButtonScales.length - 1)
-                      ],
+                    scale: yesButtonScales[Math.min(noCount, yesButtonScales.length - 1)],
                   }}
                   className="px-8 py-4 rounded-full bg-white text-pink-500 font-bold text-2xl flex items-center gap-2 shadow-lg hover:shadow-xl transition-shadow"
                   onClick={() => setShowCelebration(true)}
@@ -508,11 +486,7 @@ export default function Temp1({
                   whileHover={{ scale: 1.1 }}
                 >
                   <XCircle className="w-6 h-6" />
-                  {
-                    noButtonMessages[
-                      Math.min(noCount, noButtonMessages.length - 1)
-                    ]
-                  }
+                  {noButtonMessages[Math.min(noCount, noButtonMessages.length - 1)]}
                 </motion.button>
               </motion.div>
             )}
@@ -521,13 +495,7 @@ export default function Temp1({
       </AnimatePresence>
 
       <AnimatePresence>
-        {showCelebration && (
-          <CelebrationPopup
-            onClose={() => setShowCelebration(false)}
-            celebrationMediaUrl={celebrationMediaUrl}
-            celebrationMessage={celebrationMessage}
-          />
-        )}
+        {showCelebration && <CelebrationPopup onClose={() => setShowCelebration(false)} celebrationMediaUrl={celebrationMediaUrl} celebrationMessage={celebrationMessage} />}
       </AnimatePresence>
     </div>
   );
