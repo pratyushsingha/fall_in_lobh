@@ -16,22 +16,12 @@ interface MousePosition {
   y: number;
 }
 
-const FloatingEmoji = ({
-  emoji,
-  delay = 0,
-}: {
-  emoji: string;
-  delay?: number;
-}) => (
+const FloatingEmoji = ({ emoji, delay = 0 }: { emoji: string; delay?: number }) => (
   <motion.div
     initial={{ y: "100vh", x: Math.random() * window.innerWidth, rotate: 0 }}
     animate={{
       y: "-100vh",
-      x: [
-        Math.random() * window.innerWidth,
-        Math.random() * window.innerWidth,
-        Math.random() * window.innerWidth,
-      ],
+      x: [Math.random() * window.innerWidth, Math.random() * window.innerWidth, Math.random() * window.innerWidth],
       rotate: [0, 360, 720],
       scale: [1, 1.5, 1],
     }}
@@ -112,23 +102,29 @@ export default function Home() {
   const { subdomain } = useParams();
   const [step, setStep] = useState(0);
   const [showEmojis, setShowEmojis] = useState(false);
-  const [sparkles, setSparkles] = useState<
-    { id: number; x: number; y: number }[]
-  >([]);
+  const [sparkles, setSparkles] = useState<{ id: number; x: number; y: number }[]>([]);
   const [noCount, setNoCount] = useState(0);
   const noButtonRef = useRef<HTMLButtonElement>(null);
   const noButtonControls = useAnimation();
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  const messages = [
-    `Welcome, ${subdomain} ! 👑`,
-    `Your presence brightens my day...`,
-    `Every moment is magical ✨`,
-    `You're absolutely incredible 🌟`,
-    `Together, we create perfection 🎵`,
-    `Will you be my Valentine? 🌹`,
-  ];
+  // const messages = [
+  //   `Welcome, ${subdomain} ! 👑`,
+  //   `Your presence brightens my day...`,
+  //   `Every moment is magical ✨`,
+  //   `You're absolutely incredible 🌟`,
+  //   `Together, we create perfection 🎵`,
+  //   `Will you be my Valentine? 🌹`,
+  // ];
 
+  const messages = [
+    `Welcome, ${subdomain}! \uD83D\uDC51`,
+    "Your presence brightens my day... \uD83D\uDE0A",
+    "Every moment is magical \u2728",
+    "You're absolutely incredible \uD83C\uDF1F",
+    "Together, we create perfection \uD83C\uDFB5",
+    "Will you be my Valentine? \uD83C\uDF39",
+  ];
 
   const emojis = ["💖", "✨", "🌹", "💝", "🎵", "🦋", "🌈", "💫", "🎀"];
 
@@ -151,7 +147,6 @@ export default function Home() {
   ];
 
   useEffect(() => {
-  
     if (showEmojis) {
       const timer = setInterval(() => {
         setStep((prev) => (prev < messages.length - 1 ? prev + 1 : prev));
@@ -194,15 +189,8 @@ export default function Home() {
 
   if (!showEmojis) {
     return (
-      <div
-        className="min-h-[100dvh] flex items-center justify-center p-4 overflow-hidden bg-gradient-to-br from-pink-400 to-pink-600"
-        onMouseMove={handleMouseMove}
-      >
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="text-center relative"
-        >
+      <div className="min-h-[100dvh] flex items-center justify-center p-4 overflow-hidden bg-gradient-to-br from-pink-400 to-pink-600" onMouseMove={handleMouseMove}>
+        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center relative">
           {sparkles.map((sparkle) => (
             <SparkleEffect key={sparkle.id} x={sparkle.x} y={sparkle.y} />
           ))}
@@ -234,10 +222,7 @@ export default function Home() {
   }
 
   return (
-    <div
-      className="min-h-[100dvh] overflow-hidden relative bg-gradient-to-br from-pink-400 to-pink-600"
-      onMouseMove={handleMouseMove}
-    >
+    <div className="min-h-[100dvh] overflow-hidden relative bg-gradient-to-br from-pink-400 to-pink-600" onMouseMove={handleMouseMove}>
       {sparkles.map((sparkle) => (
         <SparkleEffect key={sparkle.id} x={sparkle.x} y={sparkle.y} />
       ))}
@@ -247,11 +232,7 @@ export default function Home() {
       ))}
 
       {Array.from({ length: 6 }).map((_, i) => (
-        <FloatingEmoji
-          key={`emoji-${i}`}
-          emoji={emojis[i % emojis.length]}
-          delay={i * 0.3}
-        />
+        <FloatingEmoji key={`emoji-${i}`} emoji={emojis[i % emojis.length]} delay={i * 0.3} />
       ))}
 
       <AnimatePresence mode="wait">
@@ -267,29 +248,29 @@ export default function Home() {
           }}
           className="absolute inset-0 flex items-center justify-center p-4"
         >
-          <motion.div
-            className="text-center text-white"
-            initial={{ y: 20, rotateX: 90 }}
-            animate={{ y: 0, rotateX: 0 }}
-            transition={{ type: "spring", stiffness: 200 }}
-          >
+          <motion.div className="text-center text-white" initial={{ y: 20, rotateX: 90 }} animate={{ y: 0, rotateX: 0 }} transition={{ type: "spring", stiffness: 200 }}>
             <motion.div className="perspective-text">
-              {messages[step].split("").map((char, i) => (
-                <motion.span
-                  key={i}
-                  variants={textVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  custom={i}
-                  className="inline-block text-4xl md:text-6xl font-bold"
-                  style={{
-                    textShadow: "0 0 20px rgba(255,255,255,0.2)",
-                  }}
-                >
-                  {char}
-                </motion.span>
-              ))}
+              {Array.from(messages[step]).map((char, i) =>
+                char === " " ? (
+                  <span key={i} className="inline-block w-6" />
+                ) : (
+                  <motion.span
+                    key={i}
+                    variants={textVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    custom={i}
+                    className="inline-block text-4xl md:text-6xl font-bold"
+                    style={{
+                      textShadow: "0 0 20px rgba(255,255,255,0.2)",
+                      fontFamily: "'Noto Color Emoji', sans-serif",
+                    }}
+                  >
+                    {char}
+                  </motion.span>
+                )
+              )}
             </motion.div>
 
             {step === messages.length - 1 && (
@@ -311,10 +292,7 @@ export default function Home() {
                   }}
                   whileTap={{ scale: 0.9 }}
                   animate={{
-                    scale:
-                      yesButtonScales[
-                        Math.min(noCount, yesButtonScales.length - 1)
-                      ],
+                    scale: yesButtonScales[Math.min(noCount, yesButtonScales.length - 1)],
                   }}
                   className="px-8 py-4 rounded-full bg-white text-pink-500 font-bold text-2xl flex items-center gap-2 shadow-lg hover:shadow-xl transition-shadow"
                   onClick={() => setStep(0)}
@@ -332,11 +310,7 @@ export default function Home() {
                   whileHover={{ scale: 1.1 }}
                 >
                   <XCircle className="w-6 h-6" />
-                  {
-                    noButtonMessages[
-                      Math.min(noCount, noButtonMessages.length - 1)
-                    ]
-                  }
+                  {noButtonMessages[Math.min(noCount, noButtonMessages.length - 1)]}
                 </motion.button>
               </motion.div>
             )}
