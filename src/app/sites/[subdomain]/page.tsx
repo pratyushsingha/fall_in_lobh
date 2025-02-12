@@ -2,21 +2,68 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
-import { Heart, Sparkles, XCircle } from "lucide-react";
+import { Heart, Stars, Sparkles, Music, Gift, XCircle, Code } from "lucide-react";
 import { useParams } from "next/navigation";
 
-interface Sparkle {
-  id: number;
-  x: number;
-  y: number;
-}
+const Logo = () => (
+  <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="fixed top-6 right-6 z-50">
+    <motion.div whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }} className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+      <Code className="w-6 h-6 text-white" />
+      <span className="text-white font-bold">Zenux Studios</span>
+    </motion.div>
+  </motion.div>
+);
 
-interface MousePosition {
-  x: number;
-  y: number;
-}
+const EmotiveFace = ({ mood = "happy", noCount = 0 }) => {
+  const expressions = {
+    superHappy: "🥰",
+    happy: "😊",
+    excited: "😍",
+    hopeful: "🤗",
+    nervous: "😅",
+    question: "🤔",
+    sad1: "😕",
+    sad2: "😢",
+    sad3: "😭",
+    sad4: "🥺",
+    celebration: "🤩",
+  };
 
-const FloatingEmoji = ({ emoji, delay = 0 }: { emoji: string; delay?: number }) => (
+  const getMoodEmoji = () => {
+    if (mood === "celebration") return expressions.celebration;
+    if (mood === "question") return expressions.question;
+    if (noCount > 0) {
+      if (noCount >= 10) return expressions.sad4;
+      if (noCount >= 7) return expressions.sad3;
+      if (noCount >= 4) return expressions.sad2;
+      return expressions.sad1;
+    }
+    return expressions[mood];
+  };
+
+  return (
+    <motion.div
+      initial={false}
+      animate={
+        noCount === 0
+          ? {
+              rotate: [0, 10, -10, 0],
+              scale: [1, 1.1, 1],
+            }
+          : {
+              rotate: [0, -10, 0],
+              scale: [1, 0.9, 1],
+            }
+      }
+      transition={{ duration: 0.5 }}
+      className="text-6xl mb-6"
+    >
+      {getMoodEmoji()}
+    </motion.div>
+  );
+};
+
+const FloatingEmoji = ({ emoji, delay = 0 }) => (
   <motion.div
     initial={{ y: "100vh", x: Math.random() * window.innerWidth, rotate: 0 }}
     animate={{
@@ -57,7 +104,7 @@ const ColorBubble = ({ delay = 0 }) => (
   />
 );
 
-const SparkleEffect = ({ x, y }: { x: number; y: number }) => (
+const SparkleEffect = ({ x, y }) => (
   <motion.div
     initial={{ scale: 0, opacity: 0 }}
     animate={{
@@ -69,6 +116,101 @@ const SparkleEffect = ({ x, y }: { x: number; y: number }) => (
     style={{ left: x, top: y }}
   >
     <Sparkles className="w-full h-full text-white/30" />
+  </motion.div>
+);
+
+const CelebrationPopup = ({ onClose }) => (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    className="fixed inset-0 flex items-center justify-center z-50 bg-black/50 backdrop-blur-sm"
+    onClick={onClose}
+  >
+    <motion.div
+      initial={{ scale: 0, rotate: -20 }}
+      animate={{
+        scale: 1,
+        rotate: 0,
+        y: [0, -10, 0],
+      }}
+      exit={{ scale: 0, rotate: 20 }}
+      transition={{
+        type: "spring",
+        damping: 12,
+        y: {
+          repeat: Infinity,
+          duration: 2,
+          ease: "easeInOut",
+        },
+      }}
+      className="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl relative overflow-hidden"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <motion.div
+        className="absolute inset-0 opacity-30"
+        animate={{
+          background: ["linear-gradient(45deg, #ff69b4, #ff1493)", "linear-gradient(45deg, #ff1493, #ff69b4)", "linear-gradient(45deg, #ff69b4, #ff1493)"],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
+
+      <div className="text-center relative">
+        <EmotiveFace mood="celebration" />
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1, rotate: [0, 360] }}
+          transition={{ type: "spring", damping: 8, delay: 0.2 }}
+          className="w-48 h-48 mx-auto mb-6 rounded-2xl overflow-hidden"
+        >
+          <img
+            src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDd6Z2E4OWF1NXJ3OWF4ZDR2bXE4M2RwdWx4YnB4ZWF6aHd6YmtnNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/108M7gCS1JSoO4/giphy.gif"
+            alt="Celebration"
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+          <h2 className="text-3xl font-bold text-pink-500 mb-4">Yay! 🎉</h2>
+          <p className="text-gray-600 text-lg mb-6">You've made my day absolutely perfect! 💖</p>
+        </motion.div>
+
+        <motion.div className="flex justify-center gap-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <motion.div
+              key={i}
+              animate={{
+                y: [0, -10, 0],
+                scale: [1, 1.2, 1],
+                rotate: [0, 10, -10, 0],
+              }}
+              transition={{
+                duration: 2,
+                delay: 0.7 + i * 0.1,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              className="text-3xl"
+            >
+              {["💝", "✨", "💖", "🎵", "🌹"][i]}
+            </motion.div>
+          ))}
+        </motion.div>
+
+        <motion.button
+          whileHover={{ scale: 1.05, rotate: [0, -5, 5, 0] }}
+          whileTap={{ scale: 0.95 }}
+          className="mt-8 px-6 py-2 bg-pink-500 text-white rounded-full font-semibold shadow-lg hover:bg-pink-600 transition-colors"
+          onClick={onClose}
+        >
+          Continue Celebrating 🎉
+        </motion.button>
+      </div>
+    </motion.div>
   </motion.div>
 );
 
@@ -102,29 +244,23 @@ export default function Home() {
   const { subdomain } = useParams();
   const [step, setStep] = useState(0);
   const [showEmojis, setShowEmojis] = useState(false);
-  const [sparkles, setSparkles] = useState<{ id: number; x: number; y: number }[]>([]);
+  const [sparkles, setSparkles] = useState([]);
   const [noCount, setNoCount] = useState(0);
-  const noButtonRef = useRef<HTMLButtonElement>(null);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const noButtonRef = useRef(null);
   const noButtonControls = useAnimation();
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  // const messages = [
-  //   `Welcome, ${subdomain} ! 👑`,
-  //   `Your presence brightens my day...`,
-  //   `Every moment is magical ✨`,
-  //   `You're absolutely incredible 🌟`,
-  //   `Together, we create perfection 🎵`,
-  //   `Will you be my Valentine? 🌹`,
-  // ];
-
   const messages = [
-    `Welcome, ${subdomain}! \uD83D\uDC51`,
-    "Your presence brightens my day... \uD83D\uDE0A",
-    "Every moment is magical \u2728",
-    "You're absolutely incredible \uD83C\uDF1F",
-    "Together, we create perfection \uD83C\uDFB5",
-    "Will you be my Valentine? \uD83C\uDF39",
+    `Welcome, ${subdomain}! 👑`,
+    `Your presence brightens my day...`,
+    `Every moment is magical ✨`,
+    `You're absolutely incredible 🌟`,
+    `Together, we create perfection 🎵`,
+    `Will you be my Valentine? 🌹`,
   ];
+
+  const moods = ["superHappy", "excited", "happy", "hopeful", "nervous", "question"];
 
   const emojis = ["💖", "✨", "🌹", "💝", "🎵", "🦋", "🌈", "💫", "🎀"];
 
@@ -155,17 +291,16 @@ export default function Home() {
     }
   }, [showEmojis, messages.length]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleMouseMove = (e) => {
     if (Math.random() > 0.8) {
-      const newSparkle: Sparkle = {
+      const newSparkle = {
         id: Date.now(),
         x: e.clientX,
         y: e.clientY,
       };
       setSparkles((prev) => [...prev.slice(-5), newSparkle]);
     }
-    const newMousePos: MousePosition = { x: e.clientX, y: e.clientY };
-    setMousePos(newMousePos);
+    setMousePos({ x: e.clientX, y: e.clientY });
   };
 
   const handleNoButtonHover = async () => {
@@ -190,6 +325,7 @@ export default function Home() {
   if (!showEmojis) {
     return (
       <div className="min-h-[100dvh] flex items-center justify-center p-4 overflow-hidden bg-gradient-to-br from-pink-400 to-pink-600" onMouseMove={handleMouseMove}>
+        <Logo />
         <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center relative">
           {sparkles.map((sparkle) => (
             <SparkleEffect key={sparkle.id} x={sparkle.x} y={sparkle.y} />
@@ -223,6 +359,7 @@ export default function Home() {
 
   return (
     <div className="min-h-[100dvh] overflow-hidden relative bg-gradient-to-br from-pink-400 to-pink-600" onMouseMove={handleMouseMove}>
+      <Logo />
       {sparkles.map((sparkle) => (
         <SparkleEffect key={sparkle.id} x={sparkle.x} y={sparkle.y} />
       ))}
@@ -249,6 +386,7 @@ export default function Home() {
           className="absolute inset-0 flex items-center justify-center p-4"
         >
           <motion.div className="text-center text-white" initial={{ y: 20, rotateX: 90 }} animate={{ y: 0, rotateX: 0 }} transition={{ type: "spring", stiffness: 200 }}>
+            <EmotiveFace mood={moods[step]} noCount={noCount} />
             <motion.div className="perspective-text">
               {Array.from(messages[step]).map((char, i) =>
                 char === " " ? (
@@ -295,7 +433,7 @@ export default function Home() {
                     scale: yesButtonScales[Math.min(noCount, yesButtonScales.length - 1)],
                   }}
                   className="px-8 py-4 rounded-full bg-white text-pink-500 font-bold text-2xl flex items-center gap-2 shadow-lg hover:shadow-xl transition-shadow"
-                  onClick={() => setStep(0)}
+                  onClick={() => setShowCelebration(true)}
                 >
                   <Heart className="w-6 h-6 fill-pink-500" />
                   Yes! ❤️
@@ -317,6 +455,8 @@ export default function Home() {
           </motion.div>
         </motion.div>
       </AnimatePresence>
+
+      <AnimatePresence>{showCelebration && <CelebrationPopup onClose={() => setShowCelebration(false)} />}</AnimatePresence>
     </div>
   );
 }
