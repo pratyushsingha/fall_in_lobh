@@ -6,8 +6,10 @@ import { TemplatePreview } from "@/components/template-preview";
 import type { ValentineTemplate } from "@/types/valentine";
 import Temp1 from "@/components/template/Temp1";
 import { div } from "framer-motion/client";
+import PreWindow from "@/components/PreWindow";
 
 export default function Page() {
+  const classname = "px-1 overflow-hidden h-[300] w-[300] md:h-[600] md:w-[300] translate-x-7 md:translate-x-0";
   const messages = [
     `Welcome,bro 👑`,
     `Your presence brightens my day...`,
@@ -66,14 +68,56 @@ export default function Page() {
 
     <div className="mx-auto">
       <p>hi guys</p>
-      <div className="flex justify-center items-center">
-        <Temp1
-          messages={messages}
-          moods={moods}
-          noButtonMessages={noButtonMessages}
-          celebrationMediaUrl={celebrationMediaUrl}
-          celebrationMessage={celebrationMessage}
-        />
+      <div className="grid grid-cols-2  md:grid-cols-4 overflow-hidden md:h-[600] mx-auto">
+        {/* <div className="flex md:h-[600] mx-auto space-x-9 justify-center"> */}
+        <div className={classname}>
+          <PreWindow>
+            <Temp1
+              messages={messages}
+              moods={moods}
+              prev={true}
+              noButtonMessages={noButtonMessages}
+              celebrationMediaUrl={celebrationMediaUrl}
+              celebrationMessage={celebrationMessage}
+            />
+          </PreWindow>
+        </div>
+        <div className={classname}>
+          <PreWindow>
+            <Temp1
+              messages={messages}
+              moods={moods}
+              prev={true}
+              noButtonMessages={noButtonMessages}
+              celebrationMediaUrl={celebrationMediaUrl}
+              celebrationMessage={celebrationMessage}
+            />
+          </PreWindow>
+        </div>
+        <div className={classname}>
+          <PreWindow>
+            <Temp1
+              messages={messages}
+              moods={moods}
+              prev={true}
+              noButtonMessages={noButtonMessages}
+              celebrationMediaUrl={celebrationMediaUrl}
+              celebrationMessage={celebrationMessage}
+            />
+          </PreWindow>
+        </div>
+        <div className={classname}>
+          <PreWindow>
+            <Temp1
+              messages={messages}
+              moods={moods}
+              prev={true}
+              noButtonMessages={noButtonMessages}
+              celebrationMediaUrl={celebrationMediaUrl}
+              celebrationMessage={celebrationMessage}
+            />
+          </PreWindow>
+        </div>
       </div>
     </div>
   );
