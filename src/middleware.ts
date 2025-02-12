@@ -19,6 +19,10 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
+  if (hostname === "zenux.live") {
+    return NextResponse.redirect("https://zenux.live");
+  }
+
   return NextResponse.next();
 }
 
