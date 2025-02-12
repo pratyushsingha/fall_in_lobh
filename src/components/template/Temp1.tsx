@@ -2,20 +2,47 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
-import { Heart, Stars, Sparkles, Music, Gift, XCircle, Code } from "lucide-react";
-import { useParams } from "next/navigation";
+import { Heart, Sparkles, XCircle, Code } from "lucide-react";
+import Image from "next/image";
+
+interface Sparkle {
+  id: number;
+  x: number;
+  y: number;
+}
+
+interface Temp1Props {
+  messages: string[];
+  moods: string[];
+  noButtonMessages: string[];
+  celebrationMediaUrl: string;
+  celebrationMessage: string;
+}
 
 const Logo = () => (
-  <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="fixed top-6 right-6 z-50">
-    <motion.div whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }} className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+  <motion.div
+    initial={{ opacity: 0, y: -20 }}
+    animate={{ opacity: 1, y: 0 }}
+    className="fixed top-6 right-6 z-50"
+  >
+    <motion.div
+      whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
+      className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full"
+    >
       <Code className="w-6 h-6 text-white" />
       <span className="text-white font-bold">Zenux Studios</span>
     </motion.div>
   </motion.div>
 );
 
-const EmotiveFace = ({ mood = "happy", noCount = 0 }) => {
-  const expressions = {
+const EmotiveFace = ({
+  mood = "happy",
+  noCount = 0,
+}: {
+  mood?: string;
+  noCount?: number;
+}) => {
+  const expressions: Record<string, string> = {
     superHappy: "🥰",
     happy: "😊",
     excited: "😍",
@@ -63,12 +90,22 @@ const EmotiveFace = ({ mood = "happy", noCount = 0 }) => {
   );
 };
 
-const FloatingEmoji = ({ emoji, delay = 0 }) => (
+const FloatingEmoji = ({
+  emoji,
+  delay = 0,
+}: {
+  emoji: string;
+  delay?: number;
+}) => (
   <motion.div
     initial={{ y: "100vh", x: Math.random() * window.innerWidth, rotate: 0 }}
     animate={{
       y: "-100vh",
-      x: [Math.random() * window.innerWidth, Math.random() * window.innerWidth, Math.random() * window.innerWidth],
+      x: [
+        Math.random() * window.innerWidth,
+        Math.random() * window.innerWidth,
+        Math.random() * window.innerWidth,
+      ],
       rotate: [0, 360, 720],
       scale: [1, 1.5, 1],
     }}
@@ -84,7 +121,7 @@ const FloatingEmoji = ({ emoji, delay = 0 }) => (
   </motion.div>
 );
 
-const ColorBubble = ({ delay = 0 }) => (
+const ColorBubble = ({ delay = 0 }: { delay?: number }) => (
   <motion.div
     initial={{ scale: 0, opacity: 0 }}
     animate={{
@@ -104,7 +141,7 @@ const ColorBubble = ({ delay = 0 }) => (
   />
 );
 
-const SparkleEffect = ({ x, y }) => (
+const SparkleEffect = ({ x, y }: { x: number; y: number }) => (
   <motion.div
     initial={{ scale: 0, opacity: 0 }}
     animate={{
@@ -119,7 +156,15 @@ const SparkleEffect = ({ x, y }) => (
   </motion.div>
 );
 
-const CelebrationPopup = ({ onClose }) => (
+const CelebrationPopup = ({
+  onClose,
+  celebrationMediaUrl,
+  celebrationMessage,
+}: {
+  onClose: () => void;
+  celebrationMediaUrl: string;
+  celebrationMessage: string;
+}) => (
   <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
@@ -150,7 +195,11 @@ const CelebrationPopup = ({ onClose }) => (
       <motion.div
         className="absolute inset-0 opacity-30"
         animate={{
-          background: ["linear-gradient(45deg, #ff69b4, #ff1493)", "linear-gradient(45deg, #ff1493, #ff69b4)", "linear-gradient(45deg, #ff69b4, #ff1493)"],
+          background: [
+            "linear-gradient(45deg, #ff69b4, #ff1493)",
+            "linear-gradient(45deg, #ff1493, #ff69b4)",
+            "linear-gradient(45deg, #ff69b4, #ff1493)",
+          ],
         }}
         transition={{
           duration: 3,
@@ -167,19 +216,30 @@ const CelebrationPopup = ({ onClose }) => (
           transition={{ type: "spring", damping: 8, delay: 0.2 }}
           className="w-48 h-48 mx-auto mb-6 rounded-2xl overflow-hidden"
         >
-          <img
-            src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDd6Z2E4OWF1NXJ3OWF4ZDR2bXE4M2RwdWx4YnB4ZWF6aHd6YmtnNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/108M7gCS1JSoO4/giphy.gif"
+          <Image
+            src={celebrationMediaUrl}
             alt="Celebration"
+            width={192}
+            height={192}
             className="w-full h-full object-cover"
           />
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
           <h2 className="text-3xl font-bold text-pink-500 mb-4">Yay! 🎉</h2>
-          <p className="text-gray-600 text-lg mb-6">You've made my day absolutely perfect! 💖</p>
+          <p className="text-gray-600 text-lg mb-6">{celebrationMessage}</p>
         </motion.div>
 
-        <motion.div className="flex justify-center gap-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
+        <motion.div
+          className="flex justify-center gap-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
           {Array.from({ length: 5 }).map((_, i) => (
             <motion.div
               key={i}
@@ -240,47 +300,25 @@ const textVariants = {
   },
 };
 
-export default function Temp1() {
-  const { subdomain } = useParams();
+export default function Temp1({
+  messages,
+  moods,
+  noButtonMessages,
+  celebrationMediaUrl,
+  celebrationMessage,
+}: Temp1Props) {
   const [step, setStep] = useState(0);
   const [showEmojis, setShowEmojis] = useState(false);
-  const [sparkles, setSparkles] = useState([]);
+  const [sparkles, setSparkles] = useState<Sparkle[]>([]);
   const [noCount, setNoCount] = useState(0);
   const [showCelebration, setShowCelebration] = useState(false);
-  const noButtonRef = useRef(null);
+  const noButtonRef = useRef<HTMLButtonElement>(null);
   const noButtonControls = useAnimation();
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  const messages = [
-    `Welcome, ${subdomain}! 👑`,
-    `Your presence brightens my day...`,
-    `Every moment is magical ✨`,
-    `You're absolutely incredible 🌟`,
-    `Together, we create perfection 🎵`,
-    `Will you be my Valentine? 🌹`,
-  ];
-
-  const moods = ["superHappy", "excited", "happy", "hopeful", "nervous", "question"];
 
   const emojis = ["💖", "✨", "🌹", "💝", "🎵", "🦋", "🌈", "💫", "🎀"];
 
   const yesButtonScales = [1, 1.1, 1.2, 1.3, 1.4];
-  const noButtonMessages = [
-    "No",
-    "Are you sure?",
-    "Really sure?",
-    "Think again!",
-    "Last chance!",
-    "Surely not?",
-    "You might regret this!",
-    "Give it another thought!",
-    "Are you absolutely certain?",
-    "This could be a mistake!",
-    "Have a heart!",
-    "Don't be so cold!",
-    "Change of heart?",
-    "Wouldn't you reconsider?",
-  ];
 
   useEffect(() => {
     if (showEmojis) {
@@ -291,7 +329,7 @@ export default function Temp1() {
     }
   }, [showEmojis, messages.length]);
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent) => {
     if (Math.random() > 0.8) {
       const newSparkle = {
         id: Date.now(),
@@ -324,9 +362,16 @@ export default function Temp1() {
 
   if (!showEmojis) {
     return (
-      <div className="min-h-[100dvh] flex items-center justify-center p-4 overflow-hidden bg-gradient-to-br from-pink-400 to-pink-600" onMouseMove={handleMouseMove}>
+      <div
+        className="min-h-[100dvh] flex items-center justify-center p-4 overflow-hidden bg-gradient-to-br from-pink-400 to-pink-600"
+        onMouseMove={handleMouseMove}
+      >
         <Logo />
-        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center relative">
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="text-center relative"
+        >
           {sparkles.map((sparkle) => (
             <SparkleEffect key={sparkle.id} x={sparkle.x} y={sparkle.y} />
           ))}
@@ -358,7 +403,10 @@ export default function Temp1() {
   }
 
   return (
-    <div className="min-h-[100dvh] overflow-hidden relative bg-gradient-to-br from-pink-400 to-pink-600" onMouseMove={handleMouseMove}>
+    <div
+      className="min-h-[100dvh] overflow-hidden relative bg-gradient-to-br from-pink-400 to-pink-600"
+      onMouseMove={handleMouseMove}
+    >
       <Logo />
       {sparkles.map((sparkle) => (
         <SparkleEffect key={sparkle.id} x={sparkle.x} y={sparkle.y} />
@@ -369,7 +417,11 @@ export default function Temp1() {
       ))}
 
       {Array.from({ length: 6 }).map((_, i) => (
-        <FloatingEmoji key={`emoji-${i}`} emoji={emojis[i % emojis.length]} delay={i * 0.3} />
+        <FloatingEmoji
+          key={`emoji-${i}`}
+          emoji={emojis[i % emojis.length]}
+          delay={i * 0.3}
+        />
       ))}
 
       <AnimatePresence mode="wait">
@@ -385,7 +437,12 @@ export default function Temp1() {
           }}
           className="absolute inset-0 flex items-center justify-center p-4"
         >
-          <motion.div className="text-center text-white" initial={{ y: 20, rotateX: 90 }} animate={{ y: 0, rotateX: 0 }} transition={{ type: "spring", stiffness: 200 }}>
+          <motion.div
+            className="text-center text-white"
+            initial={{ y: 20, rotateX: 90 }}
+            animate={{ y: 0, rotateX: 0 }}
+            transition={{ type: "spring", stiffness: 200 }}
+          >
             <EmotiveFace mood={moods[step]} noCount={noCount} />
             <motion.div className="perspective-text">
               {Array.from(messages[step]).map((char, i) =>
@@ -430,7 +487,10 @@ export default function Temp1() {
                   }}
                   whileTap={{ scale: 0.9 }}
                   animate={{
-                    scale: yesButtonScales[Math.min(noCount, yesButtonScales.length - 1)],
+                    scale:
+                      yesButtonScales[
+                        Math.min(noCount, yesButtonScales.length - 1)
+                      ],
                   }}
                   className="px-8 py-4 rounded-full bg-white text-pink-500 font-bold text-2xl flex items-center gap-2 shadow-lg hover:shadow-xl transition-shadow"
                   onClick={() => setShowCelebration(true)}
@@ -448,7 +508,11 @@ export default function Temp1() {
                   whileHover={{ scale: 1.1 }}
                 >
                   <XCircle className="w-6 h-6" />
-                  {noButtonMessages[Math.min(noCount, noButtonMessages.length - 1)]}
+                  {
+                    noButtonMessages[
+                      Math.min(noCount, noButtonMessages.length - 1)
+                    ]
+                  }
                 </motion.button>
               </motion.div>
             )}
@@ -456,7 +520,15 @@ export default function Temp1() {
         </motion.div>
       </AnimatePresence>
 
-      <AnimatePresence>{showCelebration && <CelebrationPopup onClose={() => setShowCelebration(false)} />}</AnimatePresence>
+      <AnimatePresence>
+        {showCelebration && (
+          <CelebrationPopup
+            onClose={() => setShowCelebration(false)}
+            celebrationMediaUrl={celebrationMediaUrl}
+            celebrationMessage={celebrationMessage}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
