@@ -1,15 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code } from "lucide-react";
-
-
 
 export default function ContactsPage() {
   return (
-    <div className="min-h-[90dvh] bg-gradient-to-br from-pink-300 to-purple-400 p-6 md:p-8">
-      
-      
+    <div className="min-h-[100dvh] bg-gradient-to-br from-pink-300 to-purple-400 p-6 md:p-8">
       <div className="max-w-7xl mx-auto pt-24 grid md:grid-cols-2 gap-16 items-start">
         {/* Left Column */}
         <div className="space-y-10">
@@ -84,15 +79,15 @@ export default function ContactsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-white/90 backdrop-blur-md rounded-2xl p-8 md:p-10 shadow-xl"
+          className="bg-white/90 backdrop-blur-md rounded-2xl p-6 md:p-6 shadow-xl w-full"
         >
           <form 
-            className="space-y-8"
+            className="space-y-6"
             action="https://api.web3forms.com/submit"
             method="POST"
           >
             <input type="hidden" name="access_key" value="47601f6b-9224-446e-af9d-9bd037c0b998" />
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-3">
                 <label className="text-gray-800 text-lg font-medium">Your name</label>
                 <input
