@@ -4,32 +4,32 @@ import Link from "next/link";
 import { TextAnimate } from "@/components/magicui/text-animate";
 import { RainbowButton } from "@/components/magicui/rainbow-button";
 import { AuroraText } from "@/components/magicui/aurora-text";
+import tmpa from "../../public/templatea.gif";
+import tmpb from "../../public/templateb.gif";
 
 export default function HomePage() {
   const templates = [
     {
       id: 1,
-      image:
-        "https://media.giphy.com/media/MpJJ7gWng24bjxrMiK/giphy.gif?cid=790b7611gkipwhm2amvemiansb1jd3d0ka11ynvg3dddgaki&ep=v1_gifs_trending&rid=giphy.gif&ct=g",
-      title: "Penguin Valentine",
+      image: tmpa,
+      title: "The Proposal",
     },
     {
       id: 2,
-      image:
-        "https://media.giphy.com/media/MpJJ7gWng24bjxrMiK/giphy.gif?cid=790b7611gkipwhm2amvemiansb1jd3d0ka11ynvg3dddgaki&ep=v1_gifs_trending&rid=giphy.gif&ct=g",
-      title: "Presence Template",
+      image: tmpb,
+      title: "Nerdy Reader",
     },
     {
       id: 3,
       image:
-        "https://media.giphy.com/media/MpJJ7gWng24bjxrMiK/giphy.gif?cid=790b7611gkipwhm2amvemiansb1jd3d0ka11ynvg3dddgaki&ep=v1_gifs_trending&rid=giphy.gif&ct=g",
-      title: "Panda Valentine",
+        "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdXhyY2Z5dHNmam5vdDZzcWVqd3Z3NTFuZ2tpdTk5ZXQ2Z3U0eTQ5YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/wnX0o0R1baqTMNUw3A/giphy.gif",
+      title: "Coming Soon",
     },
     {
       id: 4,
       image:
-        "https://media.giphy.com/media/MpJJ7gWng24bjxrMiK/giphy.gif?cid=790b7611gkipwhm2amvemiansb1jd3d0ka11ynvg3dddgaki&ep=v1_gifs_trending&rid=giphy.gif&ct=g",
-      title: "Monkey Valentine",
+        "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdXhyY2Z5dHNmam5vdDZzcWVqd3Z3NTFuZ2tpdTk5ZXQ2Z3U0eTQ5YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/wnX0o0R1baqTMNUw3A/giphy.gif",
+      title: "Coming Soon",
     },
   ];
 
@@ -58,23 +58,23 @@ export default function HomePage() {
           {templates.map((template) => (
             <Card
               key={template.id}
-              className="overflow-hidden hover:shadow-lg transition-shadow"
+              className="overflow-hidden transition-transform transform hover:rotate-3 hover:scale-105 hover:shadow-xl"
             >
               <Link href={`/create?template=${template.id}`}>
-                <CardContent className="p-0">
-                  <div className="relative aspect-[3/4] w-full">
-                    <Image
-                      src={template.image || "/placeholder.svg"}
-                      alt={template.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    />
-                    <h3 className="absolute bottom-5 left-5 text-white from-slate-400 to-slate-900 bg-slate-400 bg-opacity-60 px-3 py-1 rounded-md font-bold shadow-lg transform hover:scale-105 transition-transform bg-[url('/texture.png')] bg-cover bg-center">
-                      {template.title}
-                    </h3>
-                  </div>
-                </CardContent>
+              <CardContent className="p-0">
+                <div className="relative aspect-[3/4] w-full">
+                <Image
+                  src={template.image || "/placeholder.svg"}
+                  alt={template.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                />
+                <h3 className="absolute bottom-5 left-5 text-white from-slate-400 to-slate-900 bg-slate-400 bg-opacity-60 px-3 py-1 rounded-md font-bold shadow-lg transform hover:scale-110 transition-transform bg-[url('/texture.png')] bg-cover bg-center">
+                  {template.title}
+                </h3>
+                </div>
+              </CardContent>
               </Link>
             </Card>
           ))}
