@@ -37,19 +37,34 @@ export default function Home() {
   const { no } = useParams();
   const router = useRouter();
   console.log(no);
-  const [siteDetails, setSiteDetails] = useState({});
 
   const celebrationMediaUrl = "https://media.giphy.com/media/3o7TKz9bX9v9KzCnXK/giphy.gif";
   const celebrationMessage = "Congratulations! You have reached the end of this page! 🎉";
-  return (
-    
-    <Temp2
-      messages={messages}
-      moods={moods}
-      prev={false}
-      noButtonMessages={noButtonMessages}
-      celebrationMediaUrl={celebrationMediaUrl}
-      celebrationMessage={celebrationMessage}
-    />
-  );
+  
+  switch (no) {
+    case "1":
+      return (
+        <Temp1
+          messages={messages}
+          moods={moods}
+          prev={false}
+          noButtonMessages={noButtonMessages}
+          celebrationMediaUrl={celebrationMediaUrl}
+          celebrationMessage={celebrationMessage}
+        />
+      );
+    case "3":
+      return (
+        <Temp2
+          messages={messages}
+          moods={moods}
+          prev={false}
+          noButtonMessages={noButtonMessages}
+          celebrationMediaUrl={celebrationMediaUrl}
+          celebrationMessage={celebrationMessage}
+        />
+      );
+    default:
+      return <div>Default Template</div>;
+  }
 }
