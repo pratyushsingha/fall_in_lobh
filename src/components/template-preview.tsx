@@ -56,7 +56,7 @@ export function TemplatePreview({ template }) {
       <div className="h-[64px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg overflow-hidden z-60"></div>
       <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white">
         <div className="overflow-hidden w-full h-fit overflow-y-auto py-4z bg-pink-500 z-20">
-          <PreWindow>
+          
             <Temp1
               messages={messages}
               moods={moods}
@@ -65,7 +65,7 @@ export function TemplatePreview({ template }) {
               celebrationMediaUrl={celebrationMediaUrl}
               celebrationMessage={celebrationMessage}
             />
-          </PreWindow>
+          
         </div>
       </div>
     </div>
