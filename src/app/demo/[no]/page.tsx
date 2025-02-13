@@ -1,12 +1,14 @@
 "use client";
 import Temp1 from "@/components/template/Temp1";
 import { useParams } from "next/navigation";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Temp2 from "@/components/template/Temp2";
+import Temp4 from "@/components/template/Temp4";
+import Temp3 from "@/components/template/Temp3";
+
+const title = "Propose Your juillet in a Nerdy Way";
+
 const messages = [
-  `Welcome, ok 👑`,
+  `Welcome, my Love 👑`,
   `Your presence brightens my day...`,
   `Every moment is magical ✨`,
   `You're absolutely incredible 🌟`,
@@ -42,19 +44,21 @@ const noButtonMessages = [
 
 export default function Home() {
   const { no } = useParams();
-  const router = useRouter();
   console.log(no);
 
+  // const celebrationMediaUrl = "https://media.giphy.com/media/3o7TKz9bX9v9KzCnXK/giphy.gif";
+  // const celebrationMediaUrl = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXdweTYyYWk3ZGp2bDNjcGo5c2QwdnNmN3U0dWFucHo2dmZ1Z2dyMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/DorxfW5xBGSG8bVxRa/giphy.gif";
   const celebrationMediaUrl =
-    "https://media.giphy.com/media/3o7TKz9bX9v9KzCnXK/giphy.gif";
-  const celebrationMessage =
-    "Congratulations! You have reached the end of this page! 🎉";
+    "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXdweTYyYWk3ZGp2bDNjcGo5c2QwdnNmN3U0dWFucHo2dmZ1Z2dyMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/DorxfW5xBGSG8bVxRa/giphy.gif";
+  
+  
+  const celebrationMessage = "Congratulations! You have a date! 🎉";
 
   switch (no) {
     case "1":
       return (
         <Temp1
-          title="Template 1"
+          title={title}
           messages={messages}
           moods={moods}
           prev={false}
@@ -66,7 +70,7 @@ export default function Home() {
     case "2":
       return (
         <Temp2
-          title="Template 2"
+          title={title}
           messages={messages}
           moods={moods}
           prev={false}
@@ -75,7 +79,30 @@ export default function Home() {
           celebrationMessage={celebrationMessage}
         />
       );
-
+    case "3":
+      return (
+        <Temp3
+          title={title}
+          messages={messages}
+          moods={moods}
+          prev={false}
+          noButtonMessages={noButtonMessages}
+          celebrationMediaUrl={celebrationMediaUrl}
+          celebrationMessage={celebrationMessage}
+        />
+      );
+    case "4":
+      return (
+        <Temp4
+          title={title}
+          messages={messages}
+          moods={moods}
+          prev={false}
+          noButtonMessages={noButtonMessages}
+          celebrationMediaUrl={celebrationMediaUrl}
+          celebrationMessage={celebrationMessage}
+        />
+      );
     default:
       return <div>Default Template</div>;
   }

@@ -69,6 +69,60 @@ const FloatingHearts = () => {
   );
 };
 
+const EmotiveFace = ({ mood = "happy", noCount = 0, prev = false }: { mood?: string; noCount?: number; prev?: boolean }) => {
+  const expressions: Record<string, string> = {
+    superHappy: "🥰",
+    happy: "😊",
+    excited: "😍",
+    hopeful: "🤗",
+    nervous: "😅",
+    question: "🤔",
+    inocent: "😇",
+    excited2: "🥳",
+    horny: "😏",
+    heart: "❤️",
+    sad1: "😕",
+    sad2: "😢",
+    sad3: "😭",
+    sad4: "🥺",
+    celebration: "🤩",
+  };
+
+  const getMoodEmoji = () => {
+    if (mood === "no") return null;
+    if (mood === "celebration") return expressions.celebration;
+    if (noCount > 0) {
+      if (noCount >= 10) return expressions.sad4;
+      if (noCount >= 7) return expressions.sad3;
+      if (noCount >= 4) return expressions.sad2;
+      return expressions.sad1;
+    }
+    if (mood === "question") return expressions.question;
+    return expressions[mood];
+  };
+
+  return (
+    <motion.div
+      initial={false}
+      animate={
+        noCount === 0
+          ? {
+              rotate: [0, 10, -10, 0],
+              scale: [1, 1.1, 1],
+            }
+          : {
+              rotate: [0, -10, 0],
+              scale: [1, 0.9, 1],
+            }
+      }
+      transition={{ duration: 0.5 }}
+      className={prev ? "text-5xl mb-2" : "text-7xl mb-6"}
+    >
+      {getMoodEmoji()}
+    </motion.div>
+  );
+};
+
 export default function Temp2({ 
   title,
   messages, 
@@ -177,59 +231,43 @@ export default function Temp2({
       <Logo prev={prev} />
 
       <AnimatePresence mode="wait">
-        <motion.div
-          key={currentStep}
-          variants={messageVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          className="absolute inset-0 flex items-center justify-center p-4"
-        >
+        <motion.div key={currentStep} variants={messageVariants} initial="initial" animate="animate" exit="exit" className="absolute inset-0 flex items-center justify-center p-4">
           <div className="max-w-2xl w-full">
             <motion.div
               className="text-center bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-white/20"
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <motion.div 
+              <motion.div
                 className="text-6xl mb-6"
                 animate={{
                   scale: [1, 1.1, 1],
-                  rotate: [0, 5, -5, 0]
+                  rotate: [0, 5, -5, 0],
                 }}
                 transition={{
                   duration: 2,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  ease: "easeInOut",
                 }}
               >
-                {moods[currentStep]}
+                {/* {moods[currentStep]} */}
+                <EmotiveFace mood={moods[currentStep]} />
               </motion.div>
-              <motion.p
-                className="text-white text-2xl font-bold mb-8 leading-relaxed"
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3 }}
-              >
+              <motion.p className="text-white text-2xl md:text-4xl font-bold mb-8 leading-relaxed" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }}>
                 {messages[currentStep]}
               </motion.p>
               <motion.button
-                whileHover={{ 
+                whileHover={{
                   scale: 1.05,
-                  boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1)"
+                  boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1)",
                 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={nextStep}
                 className="bg-white text-pink-500 px-8 py-3 rounded-full font-bold text-xl
                   hover:bg-pink-50 transition-colors shadow-lg flex items-center gap-2 mx-auto group"
               >
-                <span>
-                  {currentStep === messages.length - 1 ? "Finish" : "Continue"}
-                </span>
-                <motion.div
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1, repeat: Infinity }}
-                >
+                <span>{currentStep === messages.length - 1 ? "Accept" : "Continue"}</span>
+                <motion.div animate={{ x: [0, 5, 0] }} transition={{ duration: 1, repeat: Infinity }}>
                   {currentStep === messages.length - 1 ? (
                     <Heart className="w-6 h-6 fill-pink-500" />
                   ) : (
@@ -260,19 +298,15 @@ export default function Temp2({
               <motion.div
                 className="absolute inset-0 opacity-30"
                 animate={{
-                  background: [
-                    "linear-gradient(45deg, #ff69b4, #ff1493)",
-                    "linear-gradient(45deg, #ff1493, #ff69b4)",
-                    "linear-gradient(45deg, #ff69b4, #ff1493)"
-                  ],
+                  background: ["linear-gradient(45deg, #ff69b4, #ff1493)", "linear-gradient(45deg, #ff1493, #ff69b4)", "linear-gradient(45deg, #ff69b4, #ff1493)"],
                 }}
                 transition={{
                   duration: 3,
                   repeat: Infinity,
-                  ease: "linear"
+                  ease: "linear",
                 }}
               />
-              
+
               <div className="relative">
                 <motion.div
                   initial={{ scale: 0 }}
@@ -280,19 +314,10 @@ export default function Temp2({
                   transition={{ delay: 0.3, type: "spring" }}
                   className="relative w-64 h-64 mx-auto mb-6 rounded-2xl overflow-hidden shadow-xl"
                 >
-                  <Image
-                    src={celebrationMediaUrl}
-                    alt="Celebration"
-                    fill
-                    className="object-cover"
-                  />
+                  <Image src={celebrationMediaUrl} alt="Celebration" width={192} height={192} className="w-full h-full object-cover" />
                 </motion.div>
-                
-                <motion.h2
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-3xl font-bold text-pink-500 mb-6"
-                >
+
+                <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-3xl font-bold text-pink-500 mb-6">
                   {celebrationMessage}
                 </motion.h2>
 
