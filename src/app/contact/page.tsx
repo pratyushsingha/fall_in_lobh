@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {  Code } from "lucide-react";
+import { Code } from "lucide-react";
 
 const Logo = () => (
   <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="fixed top-6 right-6 z-50">
@@ -17,7 +17,7 @@ const Logo = () => (
 
 export default function ContactsPage() {
   return (
-    <div className="min-h-[100dvh] bg-gradient-to-br from-pink-400 to-pink-600 p-6 md:p-8">
+    <div className="min-h-[100dvh] bg-gradient-to-br from-pink-300 to-purple-400 p-6 md:p-8">
       <Logo />
       
       <div className="max-w-7xl mx-auto pt-24 grid md:grid-cols-2 gap-16 items-start">
@@ -90,56 +90,67 @@ export default function ContactsPage() {
           </motion.div>
         </div>
 
-        {/* Right Column - Contact Form */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-pink-400/40 backdrop-blur-md rounded-2xl p-8 md:p-10 shadow-xl"
+          className="bg-white/90 backdrop-blur-md rounded-2xl p-8 md:p-10 shadow-xl"
         >
-          <form className="space-y-8">
+          <form 
+            className="space-y-8"
+            action="https://api.web3forms.com/submit"
+            method="POST"
+          >
+            <input type="hidden" name="access_key" value="47601f6b-9224-446e-af9d-9bd037c0b998" />
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-3">
-                <label className="text-white/90 text-lg font-medium">Your name</label>
+                <label className="text-gray-800 text-lg font-medium">Your name</label>
                 <input
                   type="text"
-                  className="w-full bg-pink-500/20 border-2 border-white/20 rounded-xl px-5 py-4 text-lg text-white placeholder:text-white/50 focus:outline-none focus:border-fuchsia-300/70"
+                  name="name"
+                  className="w-full bg-pink-100 border-2 border-pink-200 rounded-xl px-5 py-4 text-lg text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-fuchsia-400"
                   placeholder="Enter your name"
+                  required
                 />
               </div>
               <div className="space-y-3">
-                <label className="text-white/90 text-lg font-medium">Your work email</label>
+                <label className="text-gray-800 text-lg font-medium">Your work email</label>
                 <input
                   type="email"
-                  className="w-full bg-pink-500/20 border-2 border-white/20 rounded-xl px-5 py-4 text-lg text-white placeholder:text-white/50 focus:outline-none focus:border-fuchsia-300/70"
+                  name="email"
+                  className="w-full bg-pink-100 border-2 border-pink-200 rounded-xl px-5 py-4 text-lg text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-fuchsia-400"
                   placeholder="Enter your email"
+                  required
                 />
               </div>
             </div>
 
             <div className="space-y-3">
-              <label className="text-white/90 text-lg font-medium">Company name</label>
+              <label className="text-gray-800 text-lg font-medium">Company name</label>
               <input
                 type="text"
-                className="w-full bg-pink-500/20 border-2 border-white/20 rounded-xl px-5 py-4 text-lg text-white placeholder:text-white/50 focus:outline-none focus:border-fuchsia-300/70"
+                name="company"
+                className="w-full bg-pink-100 border-2 border-pink-200 rounded-xl px-5 py-4 text-lg text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-fuchsia-400"
                 placeholder="Enter company name"
               />
             </div>
 
             <div className="space-y-3">
-              <label className="text-white/90 text-lg font-medium">How did you hear about us?</label>
+              <label className="text-gray-800 text-lg font-medium">How did you hear about us?</label>
               <input
                 type="text"
-                className="w-full bg-pink-500/20 border-2 border-white/20 rounded-xl px-5 py-4 text-lg text-white placeholder:text-white/50 focus:outline-none focus:border-fuchsia-300/70"
+                name="source"
+                className="w-full bg-pink-100 border-2 border-pink-200 rounded-xl px-5 py-4 text-lg text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-fuchsia-400"
                 placeholder="Tell us how you found us"
               />
             </div>
 
             <div className="space-y-3">
-              <label className="text-white/90 text-lg font-medium">Notes</label>
+              <label className="text-gray-800 text-lg font-medium">Notes</label>
               <textarea
                 rows={4}
-                className="w-full bg-pink-500/20 border-2 border-white/20 rounded-xl px-5 py-4 text-lg text-white placeholder:text-white/50 focus:outline-none focus:border-fuchsia-300/70"
+                name="notes"
+                className="w-full bg-pink-100 border-2 border-pink-200 rounded-xl px-5 py-4 text-lg text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-fuchsia-400"
                 placeholder="Anything else you'd like to share with the Zenux Studios?"
               />
             </div>
@@ -147,7 +158,7 @@ export default function ContactsPage() {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full bg-fuchsia-300 hover:bg-fuchsia-200 text-fuchsia-950 text-xl font-semibold rounded-xl px-8 py-4 transition-colors shadow-lg"
+              className="w-full bg-fuchsia-500 hover:bg-fuchsia-600 text-white text-xl font-semibold rounded-xl px-8 py-4 transition-colors shadow-lg"
             >
               SUBMIT
             </motion.button>
