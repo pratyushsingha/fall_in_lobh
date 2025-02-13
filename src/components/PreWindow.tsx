@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function PreWindow({ children }: { children: React.ReactNode }) {
-  return <div className=" scale-50 md:scale-100 origin-top-left  border border-gray-400  rounded-xl shadow-lg overflow-hidden">{children}</div>;
+  return <div className=" scale-50 md:scale-100 origin-top-left  rounded-xl shadow-lg overflow-hidden">{children}</div>;
 }
 
 
