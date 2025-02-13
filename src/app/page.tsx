@@ -28,21 +28,7 @@ export default function HomePage() {
 
   return (
     <div className="h-screen max-w-7xl md:max-w-screen-2xl mx-auto  overflow-hidden">
-      <header className="p-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-pink-600">Celebrate valentine&apos;s day with Zenuz Studios</h1>
-        <nav className="space-x-4">
-          <a href="#" className="text-pink-600 hover:text-pink-700">
-            Home
-          </a>
-          <a href="#" className="text-pink-600 hover:text-pink-700">
-            About
-          </a>
-          <a href="#" className="text-pink-600 hover:text-pink-700">
-            Contact
-          </a>
-        </nav>
-      </header>
-      <hr className="border-t border-pink-400" />
+      
 
       <main className=" mx-auto ">
         <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-700 via-pink-400 to-pink-700 text-center mb-8 mt-6 drop-shadow-lg animate-bounce">
@@ -51,8 +37,11 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-8">
           {templates.map((template) => (
-            <Card key={template.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <Link href={`/create?template=${template.id} `}>
+            <Card
+              key={template.id}
+              className="overflow-hidden transition-transform duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl hover:border-pink-300 hover:bg-pink-300 hover:border-2 "
+            >
+              <Link href={`/create?template=${template.id}`}>
                 <CardContent className="p-0">
                   <div className="relative aspect-[3/4] w-full">
                     <Image
