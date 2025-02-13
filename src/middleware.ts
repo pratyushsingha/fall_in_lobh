@@ -16,7 +16,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
-  if (hostname.startsWith("localhost")) {
+  if (hostname.startsWith("localhost") || hostname.startsWith("192")) {
     if (url.pathname === "/X") {
       url.pathname = "/sites/lordzenux";
     }

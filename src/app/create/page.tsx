@@ -259,7 +259,7 @@ const CreateWebPage = () => {
               </p>
             </div>
 
-            <Card className="p-4 space-y-4">
+            <Card className="p-4 space-y-4 ">
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}

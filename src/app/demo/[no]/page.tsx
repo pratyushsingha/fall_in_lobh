@@ -5,7 +5,7 @@ import Temp2 from "@/components/template/Temp2";
 // import Temp4 from "@/components/template/Temp4";
 // import Temp3 from "@/components/template/Temp3";
 
-const title = "Propose Your juillet in a Nerdy Way";
+const title = "Love Bliss";
 
 const messages = [
   `Welcome, my Love 👑`,
@@ -46,13 +46,14 @@ export default function Home() {
   const { no } = useParams();
   console.log(no);
 
-  // const celebrationMediaUrl = "https://media.giphy.com/media/3o7TKz9bX9v9KzCnXK/giphy.gif";
-  // const celebrationMediaUrl = "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXdweTYyYWk3ZGp2bDNjcGo5c2QwdnNmN3U0dWFucHo2dmZ1Z2dyMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/DorxfW5xBGSG8bVxRa/giphy.gif";
-  const celebrationMediaUrl =
-    "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXdweTYyYWk3ZGp2bDNjcGo5c2QwdnNmN3U0dWFucHo2dmZ1Z2dyMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/DorxfW5xBGSG8bVxRa/giphy.gif";
+  // const celebrationMediaUrl =
+    // "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXdweTYyYWk3ZGp2bDNjcGo5c2QwdnNmN3U0dWFucHo2dmZ1Z2dyMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/DorxfW5xBGSG8bVxRa/giphy.gif";
+  
+    const celebrationMediaUrl =
+      "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzMxbWtuYTFldDdtd3I3MmxzMXc4ZjJneHA2dWVsODJndXlwYTBqdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/UkfUod3TFW66J2BWKK/giphy.gif";
   
   
-  const celebrationMessage = "Congratulations! You have a date! 🎉";
+  const celebrationMessage = "Congratulations! we have a date! 🎉";
 
   switch (no) {
     case "1":
