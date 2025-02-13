@@ -21,6 +21,7 @@ import {
 import { Loader, Plus, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title cannot be empty"),
@@ -140,7 +141,7 @@ const CreateWebPage = () => {
   }
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">
           Create Valentine Page for your loved one 🥰
@@ -400,6 +401,7 @@ const CreateWebPage = () => {
 
                   <Button disabled={isLoading} type="submit" className="w-full">
                     {isLoading && <Loader className="animate-spin" />}
+                    Create
                   </Button>
                 </form>
               </Form>
