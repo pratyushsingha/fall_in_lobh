@@ -2,8 +2,8 @@
 import Temp1 from "@/components/template/Temp1";
 import { useParams } from "next/navigation";
 import Temp2 from "@/components/template/Temp2";
-// import Temp4 from "@/components/template/Temp4";
-// import Temp3 from "@/components/template/Temp3";
+import Temp4 from "@/components/template/Temp4";
+import Temp3 from "@/components/template/Temp3";
 
 const title = "Love Bliss";
 
@@ -80,30 +80,30 @@ export default function Home() {
           celebrationMessage={celebrationMessage}
         />
       );
-    // case "3":
-    //   return (
-    //     <Temp3
-    //       title={title}
-    //       messages={messages}
-    //       moods={moods}
-    //       prev={false}
-    //       noButtonMessages={noButtonMessages}
-    //       celebrationMediaUrl={celebrationMediaUrl}
-    //       celebrationMessage={celebrationMessage}
-    //     />
-    //   );
-    // case "4":
-    //   return (
-    //     <Temp4
-    //       title={title}
-    //       messages={messages}
-    //       moods={moods}
-    //       prev={false}
-    //       noButtonMessages={noButtonMessages}
-    //       celebrationMediaUrl={celebrationMediaUrl}
-    //       celebrationMessage={celebrationMessage}
-    //     />
-    //   );
+    case "3":
+      return (
+        <Temp3
+          title={title}
+          messages={messages}
+          moods={moods}
+          prev={false}
+          noButtonMessages={noButtonMessages}
+          celebrationMediaUrl={celebrationMediaUrl}
+          celebrationMessage={celebrationMessage}
+        />
+      );
+    case "4":
+      return (
+        <Temp4
+          title={title}
+          messages={messages}
+          moods={moods}
+          prev={false}
+          noButtonMessages={noButtonMessages}
+          celebrationMediaUrl={celebrationMediaUrl}
+          celebrationMessage={celebrationMessage}
+        />
+      );
     default:
       return <div>Default Template</div>;
   }
