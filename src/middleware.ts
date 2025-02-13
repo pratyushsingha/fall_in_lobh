@@ -15,24 +15,22 @@ export function middleware(request: NextRequest) {
     url.pathname = `/sites/${subdomain}`;
     return NextResponse.rewrite(url);
   }
+
   if (hostname.startsWith("localhost")) {
     if (url.pathname === "/X") {
       url.pathname = "/sites/lordzenux";
     }
-    // url.pathname = `/sites/lordzenux`;
-    
     return NextResponse.rewrite(url);
+  }
+
+  if (hostname === "zenux.live") {
+    return NextResponse.next();
   }
 
   if (!hostname.endsWith(".zenux.live")) {
     url.pathname = `/sites/custom/${hostname}`;
     return NextResponse.rewrite(url);
   }
-
-  if (hostname === "zenux.live") {
-    return NextResponse.redirect("https://zenux.live");
-  }
-
 
   return NextResponse.next();
 }
