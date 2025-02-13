@@ -3,22 +3,12 @@
 import { motion } from "framer-motion";
 import { Code } from "lucide-react";
 
-const Logo = () => (
-  <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="fixed top-6 right-6 z-50">
-    <motion.div 
-      whileHover={{ scale: 1.1 }} 
-      whileTap={{ scale: 0.95 }}
-      className="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-lg"
-    >
-      <Code className="w-8 h-8 text-white" />
-    </motion.div>
-  </motion.div>
-);
+
 
 export default function ContactsPage() {
   return (
-    <div className="min-h-[100dvh] bg-gradient-to-br from-pink-300 to-purple-400 p-6 md:p-8">
-      <Logo />
+    <div className="min-h-[90dvh] bg-gradient-to-br from-pink-300 to-purple-400 p-6 md:p-8">
+      
       
       <div className="max-w-7xl mx-auto pt-24 grid md:grid-cols-2 gap-16 items-start">
         {/* Left Column */}
