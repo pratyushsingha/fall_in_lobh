@@ -10,24 +10,12 @@ import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Loader, Plus, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title cannot be empty"),
@@ -101,7 +89,6 @@ const CreateWebPage = () => {
     control: form.control,
   });
 
-
   const MessageWithMood = ({ messageIndex }: { messageIndex: number }) => {
     return (
       <div className="flex gap-2">
@@ -125,10 +112,7 @@ const CreateWebPage = () => {
             name={`moods.${messageIndex}`}
             render={({ field }) => (
               <FormItem>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Mood" />
@@ -244,162 +228,112 @@ const CreateWebPage = () => {
   return (
     <div className="min-h-screen">
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">
-          Create Valentine Page for your loved one 🥰
-        </h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">Create Valentine Page for your loved one 🥰</h1>
         <div className="grid md:grid-cols-2 gap-8">
           <div className="space-y-6 p-6 bg-pink-50 rounded-lg">
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-gray-900">
-                Create Valentine Page
-              </h2>
-              <p className="text-gray-600">
-                Start creating your personalized valentine page here. Be
-                creative!
-              </p>
+              <h2 className="text-2xl font-bold text-gray-900">Create Valentine Page</h2>
+              <p className="text-gray-600">Start creating your personalized valentine page here. Be creative!</p>
             </div>
 
-            <Card className="p-4 space-y-4 ">
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-4"
-                >
-                  <div className="space-y-4">
-                    <FormField
-                      control={form.control}
-                      name="title"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Name of ur special one</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Romeo" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+            <Card className="p-1 md:pr-2 space-y-4 ">
+              <ScrollArea className="rounded-md h-full md:h-[500px] p-4 ">
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                     <div className="space-y-4">
-                      <h3 className="font-semibold">Messages</h3>
-                      {form.watch("messages").map((_, index) => (
-                        <MessageWithMood key={index} messageIndex={index} />
-                      ))}
-                      <Button
-                        onClick={() => {
-                          form.setValue("messages", [
-                            ...form.getValues("messages"),
-                            "",
-                          ]);
-                          form.setValue("moods", [
-                            ...form.getValues("moods"),
-                            "",
-                          ]);
-                        }}
-                        type="button"
-                        size="sm"
-                        variant="outline"
-                      >
-                        <Plus className="w-4 h-4 mr-2" />
-                        Add Message
-                      </Button>
-                    </div>
-                  </div>
-                  <Separator className="my-4" />
-
-                  <div className="space-y-4">
-                    <h3 className="font-semibold">No Button Messages</h3>
-                    {form.watch("noButtonMessages").map((_, index) => (
                       <FormField
-                        key={index}
                         control={form.control}
-                        name={`noButtonMessages.${index}`}
+                        name="title"
                         render={({ field }) => (
                           <FormItem>
+                            <FormLabel>Name of ur special one</FormLabel>
                             <FormControl>
-                              <div className="flex gap-2">
-                                <Input
-                                  placeholder="Enter no button message..."
-                                  {...field}
-                                />
-                                <Button
-                                  onClick={() => {
-                                    const newNoButtonMessages = [
-                                      ...form.getValues("noButtonMessages"),
-                                    ];
-                                    newNoButtonMessages.splice(index, 1);
-                                    form.setValue(
-                                      "noButtonMessages",
-                                      newNoButtonMessages
-                                    );
-                                  }}
-                                  type="button"
-                                  variant="destructive"
-                                  size="icon"
-                                >
-                                  <X className="w-4 h-4" />
-                                </Button>
-                              </div>
+                              <Input placeholder="Romeo" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
-                    ))}
-                    <Button
-                      onClick={() =>
-                        form.setValue("noButtonMessages", [
-                          ...form.getValues("noButtonMessages"),
-                          "",
-                        ])
-                      }
-                      type="button"
-                      size="sm"
-                      variant="outline"
-                    >
-                      <Plus className="w-4 h-4 mr-2" />
-                      Add No Button Message
-                    </Button>
-                  </div>
+                      <div className="space-y-4">
+                        <h3 className="font-semibold">Messages</h3>
+                        {form.watch("messages").map((_, index) => (
+                          <MessageWithMood key={index} messageIndex={index} />
+                        ))}
+                        <Button
+                          onClick={() => {
+                            form.setValue("messages", [...form.getValues("messages"), ""]);
+                            form.setValue("moods", [...form.getValues("moods"), ""]);
+                          }}
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                        >
+                          <Plus className="w-4 h-4 mr-2" />
+                          Add Message
+                        </Button>
+                      </div>
+                    </div>
+                    <Separator className="my-4" />
 
-                  <Separator className="my-4" />
+                    <div className="space-y-4">
+                      <h3 className="font-semibold">No Button Messages</h3>
+                      {form.watch("noButtonMessages").map((_, index) => (
+                        <FormField
+                          key={index}
+                          control={form.control}
+                          name={`noButtonMessages.${index}`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <div className="flex gap-2">
+                                  <Input placeholder="Enter no button message..." {...field} />
+                                  <Button
+                                    onClick={() => {
+                                      const newNoButtonMessages = [...form.getValues("noButtonMessages")];
+                                      newNoButtonMessages.splice(index, 1);
+                                      form.setValue("noButtonMessages", newNoButtonMessages);
+                                    }}
+                                    type="button"
+                                    variant="destructive"
+                                    size="icon"
+                                  >
+                                    <X className="w-4 h-4" />
+                                  </Button>
+                                </div>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      ))}
+                      <Button onClick={() => form.setValue("noButtonMessages", [...form.getValues("noButtonMessages"), ""])} type="button" size="sm" variant="outline">
+                        <Plus className="w-4 h-4 mr-2" />
+                        Add No Button Message
+                      </Button>
+                    </div>
 
-                  <FormField
-                    control={form.control}
-                    name="celebrationMediaUrl"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Celebration Media URL</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="https://example.com/media.gif"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                    <Separator className="my-4" />
 
-                  <FormField
-                    control={form.control}
-                    name="celebrationMessage"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Celebration Message</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Congratulations!" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <div className="flex space-x-3">
                     <FormField
                       control={form.control}
-                      name="subdomain"
+                      name="celebrationMediaUrl"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>url</FormLabel>
+                          <FormLabel>Celebration Media URL</FormLabel>
+                          <FormControl>
+                            <Input placeholder="https://example.com/media.gif" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="celebrationMessage"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Celebration Message</FormLabel>
                           <FormControl>
                             <Input placeholder="Congratulations!" {...field} />
                           </FormControl>
@@ -407,37 +341,46 @@ const CreateWebPage = () => {
                         </FormItem>
                       )}
                     />
-                    <FormField
-                      control={form.control}
-                      name="domain"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>url</FormLabel>
-                          <FormControl>
-                            <Input
-                              disabled
-                              placeholder="Congratulations!"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                    <div className="flex space-x-3">
+                      <FormField
+                        control={form.control}
+                        name="subdomain"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>url</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Congratulations!" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="domain"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>url</FormLabel>
+                            <FormControl>
+                              <Input disabled placeholder="Congratulations!" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
 
-                  <Button disabled={isLoading} type="submit" className="w-full">
-                    {isLoading && <Loader className="animate-spin" />}
-                    Create
-                  </Button>
-                </form>
-              </Form>
+                    <Button disabled={isLoading} type="submit" className="max-w-full absolute bottom-4 left-4" style={{ width: "calc(100% - 2rem)" }}>
+                      {isLoading && <Loader className="animate-spin" />}
+                      Create
+                    </Button>
+                  </form>
+                </Form>
+              </ScrollArea>
             </Card>
           </div>
           <div className="sticky top-8">
-            <h2 className="text-xl font-semibold mb-4 text-gray-700">
-              Preview
-            </h2>
+            <h2 className="text-xl font-semibold mb-4 text-gray-700">Preview</h2>
             <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg">
               <TemplatePreview template={template} />
             </div>

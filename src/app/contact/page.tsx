@@ -1,153 +1,87 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Code, MapPin, Mail, Phone, Printer } from "lucide-react";
 
 export default function ContactsPage() {
   return (
     <div className="min-h-[100dvh] bg-gradient-to-br from-pink-300 to-purple-400 p-6 md:p-8">
-      <div className="max-w-7xl mx-auto pt-24 grid md:grid-cols-2 gap-16 items-start">
-        {/* Left Column */}
-        <div className="space-y-10">
-          <div>
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-6xl md:text-7xl font-bold text-white mb-6"
-            >
-              Contact us
-            </motion.h1>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-5xl md:text-6xl text-white/90 font-light"
-            >
-              Get in touch
-            </motion.h2>
+      <div className="max-w-5xl mx-auto pt-24">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden">
+          <div className="grid md:grid-cols-2">
+            <div className="bg-pink-400/40 backdrop-blur-md p-8 md:p-12 flex flex-col justify-between">
+              <div className="space-y-8">
+                <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl font-bold text-white">
+                  Contact Us
+                </motion.h2>
+
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="space-y-6">
+                  <div className="flex items-center gap-4 text-white">
+                    <MapPin className="w-6 h-6 flex-shrink-0" />
+                    <div>
+                      <p>32, Avenue ve Newyork</p>
+                      <p>321994 Newyork</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-4 text-white">
+                    <Mail className="w-6 h-6 flex-shrink-0" />
+                    <a href="mailto:support@zenux.live">support@zenux.live</a>
+                  </div>
+
+                  <div className="flex items-center gap-4 text-white">
+                    <Phone className="w-6 h-6 flex-shrink-0" />
+                    <p>+91 98303 55637</p>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Right Column - Contact Form */}
+            <div className="p-8 md:p-12">
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
+                <div>
+                  <h2 className="text-3xl font-bold text-gray-800 mb-2">Get in Touch</h2>
+                  <p className="text-gray-600">Feel free to drop us a line below!</p>
+                </div>
+
+                <form className="space-y-6" action="https://api.web3forms.com/submit" method="POST">
+                  <input type="hidden" name="access_key" value="47601f6b-9224-446e-af9d-9bd037c0b998" />
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Your Name"
+                    className="w-full bg-pink-100 border-2 border-pink-200 rounded-xl px-5 py-4 text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-fuchsia-400"
+                    required
+                  />
+
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Your Email"
+                    className="w-full bg-pink-100 border-2 border-pink-200 rounded-xl px-5 py-4 text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-fuchsia-400"
+                    required
+                  />
+
+                  <textarea
+                    rows={4}
+                    name="message"
+                    placeholder="Typing your message here..."
+                    className="w-full bg-pink-100 border-2 border-pink-200 rounded-xl px-5 py-4 text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-fuchsia-400"
+                    required
+                  />
+
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-40 bg-fuchsia-500 hover:bg-fuchsia-600 text-white text-lg font-semibold rounded-full px-8 py-4 transition-colors shadow-lg"
+                  >
+                    SEND
+                  </motion.button>
+                </form>
+              </motion.div>
+            </div>
           </div>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="space-y-4"
-          >
-            <p className="text-white/90 text-xl md:text-2xl leading-relaxed">
-              Please feel free to connect and share your thoughts.{' '}
-              <a href="#" className="text-fuchsia-200 hover:text-white transition-colors">
-                We&apos;re here to help.
-              </a>{' '}
-              We&apos;d love to hear from you.
-            </p>
-          </motion.div>
-
-          <motion.ul 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="space-y-6"
-          >
-            <li className="flex items-center gap-4 text-white/90 text-xl">
-              <div className="w-6 h-6 rounded-full bg-fuchsia-300 flex items-center justify-center">
-                <div className="w-2.5 h-2.5 rounded-full bg-fuchsia-900" />
-              </div>
-              Learn more about the product
-            </li>
-           
-            <li className="flex items-center gap-4 text-white/90 text-xl">
-              <div className="w-6 h-6 rounded-full bg-fuchsia-300 flex items-center justify-center">
-                <div className="w-2.5 h-2.5 rounded-full bg-fuchsia-900" />
-              </div>
-              Request a demo
-            </li>
-          </motion.ul>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="text-white/80 text-lg"
-          >
-            Contact us directly at{' '}
-            <a href="mailto:support@zenux.live" className="text-fuchsia-200 hover:text-white font-medium transition-colors">
-              support@zenux.live
-            </a>
-          </motion.div>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="bg-white/90 backdrop-blur-md rounded-2xl p-6 md:p-6 shadow-xl w-full"
-        >
-          <form 
-            className="space-y-6"
-            action="https://api.web3forms.com/submit"
-            method="POST"
-          >
-            <input type="hidden" name="access_key" value="47601f6b-9224-446e-af9d-9bd037c0b998" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-3">
-                <label className="text-gray-800 text-lg font-medium">Your name</label>
-                <input
-                  type="text"
-                  name="name"
-                  className="w-full bg-pink-100 border-2 border-pink-200 rounded-xl px-5 py-4 text-lg text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-fuchsia-400"
-                  placeholder="Enter your name"
-                  required
-                />
-              </div>
-              <div className="space-y-3">
-                <label className="text-gray-800 text-lg font-medium">Your work email</label>
-                <input
-                  type="email"
-                  name="email"
-                  className="w-full bg-pink-100 border-2 border-pink-200 rounded-xl px-5 py-4 text-lg text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-fuchsia-400"
-                  placeholder="Enter your email"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <label className="text-gray-800 text-lg font-medium">Company name</label>
-              <input
-                type="text"
-                name="company"
-                className="w-full bg-pink-100 border-2 border-pink-200 rounded-xl px-5 py-4 text-lg text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-fuchsia-400"
-                placeholder="Enter company name"
-              />
-            </div>
-
-            <div className="space-y-3">
-              <label className="text-gray-800 text-lg font-medium">How did you hear about us?</label>
-              <input
-                type="text"
-                name="source"
-                className="w-full bg-pink-100 border-2 border-pink-200 rounded-xl px-5 py-4 text-lg text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-fuchsia-400"
-                placeholder="Tell us how you found us"
-              />
-            </div>
-
-            <div className="space-y-3">
-              <label className="text-gray-800 text-lg font-medium">Notes</label>
-              <textarea
-                rows={4}
-                name="notes"
-                className="w-full bg-pink-100 border-2 border-pink-200 rounded-xl px-5 py-4 text-lg text-gray-800 placeholder:text-gray-500 focus:outline-none focus:border-fuchsia-400"
-                placeholder="Anything else you'd like to share with the Zenux Studios?"
-              />
-            </div>
-
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full bg-fuchsia-500 hover:bg-fuchsia-600 text-white text-xl font-semibold rounded-xl px-8 py-4 transition-colors shadow-lg"
-            >
-              SUBMIT
-            </motion.button>
-          </form>
         </motion.div>
       </div>
     </div>
