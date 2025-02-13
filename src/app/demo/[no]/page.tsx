@@ -2,8 +2,8 @@
 import Temp1 from "@/components/template/Temp1";
 import { useParams } from "next/navigation";
 import Temp2 from "@/components/template/Temp2";
-import Temp4 from "@/components/template/Temp4";
-import Temp3 from "@/components/template/Temp3";
+// import Temp4 from "@/components/template/Temp4";
+// import Temp3 from "@/components/template/Temp3";
 
 const title = "Propose Your juillet in a Nerdy Way";
 
