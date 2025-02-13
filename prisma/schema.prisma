@@ -18,8 +18,8 @@ model website {
   title               String
   moods               String[]
   messages            String[]
-  celebrationMediaUrl String
-  celebrationMessage  String
+  celebrationMediaUrl String   @default("https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXdweTYyYWk3ZGp2bDNjcGo5c2QwdnNmN3U0dWFucHo2dmZ1Z2dyMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/DorxfW5xBGSG8bVxRa/giphy.gif")
+  celebrationMessage  String   @default("Congratulations! we have a date! 🎉")
   noButtonMessages    String[]
   webUrl              String   @unique
   createdAt           DateTime @default(now())

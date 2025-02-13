@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Spinner from "@/components/spinner/Spinner";
 
 interface SiteDetails {
   title: string;
@@ -18,6 +19,7 @@ export default function Home() {
   const { subdomain } = useParams();
   const router = useRouter();
   console.log(subdomain);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [siteDetails, setSiteDetails] = useState<SiteDetails>({
     title: "",
@@ -28,12 +30,15 @@ export default function Home() {
     celebrationMessage: "",
   });
   const getSiteDetails = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get(`/api/website?query=${subdomain}`);
       setSiteDetails(response.data.website);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching site details:", error);
       router.push("/404");
+      setIsLoading(false);
     }
   };
 
@@ -41,7 +46,11 @@ export default function Home() {
     getSiteDetails();
   }, []);
 
-  return (
+  return isLoading ? (
+    <div className="flex justify-center items-center h-screen w-full bg-gradient-to-b from-pink-100 via-pink-200 to-pink-300">
+      <Spinner />
+    </div>
+  ) : (
     <Temp1
       title={siteDetails?.title}
       messages={siteDetails?.messages}

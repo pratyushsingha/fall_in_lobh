@@ -4,8 +4,8 @@ import Link from "next/link";
 import { TextAnimate } from "@/components/magicui/text-animate";
 import { RainbowButton } from "@/components/magicui/rainbow-button";
 import { AuroraText } from "@/components/magicui/aurora-text";
-import tmpa from "../../public/templatea.gif";
-import tmpb from "../../public/templateb.gif";
+import tmpa from "../../../public/templatea.gif";
+import tmpb from "../../../public/templateb.gif";
 
 export default function HomePage() {
   const templates = [
@@ -61,20 +61,20 @@ export default function HomePage() {
               className="overflow-hidden transition-transform transform hover:rotate-3 hover:scale-105 hover:shadow-xl"
             >
               <Link href={`/create?template=${template.id}`}>
-              <CardContent className="p-0">
-                <div className="relative aspect-[3/4] w-full">
-                <Image
-                  src={template.image || "/placeholder.svg"}
-                  alt={template.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
-                <h3 className="absolute bottom-5 left-5 text-white from-slate-400 to-slate-900 bg-slate-400 bg-opacity-60 px-3 py-1 rounded-md font-bold shadow-lg transform hover:scale-110 transition-transform bg-[url('/texture.png')] bg-cover bg-center">
-                  {template.title}
-                </h3>
-                </div>
-              </CardContent>
+                <CardContent className="p-0">
+                  <div className="relative aspect-[3/4] w-full">
+                    <Image
+                      src={template.image || "/placeholder.svg"}
+                      alt={template.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    />
+                    <h3 className="absolute bottom-5 left-5 text-white from-slate-400 to-slate-900 bg-slate-400 bg-opacity-60 px-3 py-1 rounded-md font-bold shadow-lg transform hover:scale-110 transition-transform bg-[url('/texture.png')] bg-cover bg-center">
+                      {template.title}
+                    </h3>
+                  </div>
+                </CardContent>
               </Link>
             </Card>
           ))}
