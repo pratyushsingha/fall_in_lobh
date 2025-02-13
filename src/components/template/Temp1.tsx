@@ -289,10 +289,7 @@ export default function Temp1({ title, messages, moods, prev = false, noButtonMe
 
   const yesButtonScales = [1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2];
 
-  if (prev)
-    document.title = "Zenux Studios";
-  else
-    document.title = title;
+ 
   useEffect(() => {
     if (showEmojis) {
       const timer = setInterval(() => {
@@ -303,6 +300,7 @@ export default function Temp1({ title, messages, moods, prev = false, noButtonMe
   }, [showEmojis, messages?.length]);
 
   if (prev && messages) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (step === messages?.length - 1) {
         setTimeout(() => {

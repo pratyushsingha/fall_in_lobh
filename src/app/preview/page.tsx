@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Clipboard } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
 
-const PreviewPage = () => {
+const Preview = () => {
   const searchParams = useSearchParams();
   const url = searchParams.get("url");
   const { width, height } = useWindowSize();
@@ -55,4 +55,12 @@ const PreviewPage = () => {
   );
 };
 
-export default PreviewPage;
+const page = () => {
+  return (
+    <Suspense>
+      <Preview />
+    </Suspense>
+  );
+};
+
+export default page;
