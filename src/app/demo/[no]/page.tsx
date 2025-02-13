@@ -14,7 +14,14 @@ const messages = [
   `Will you be my Valentine? 🌹`,
 ];
 
-const moods = ["superHappy", "excited", "happy", "hopeful", "nervous", "question"];
+const moods = [
+  "superHappy",
+  "excited",
+  "happy",
+  "hopeful",
+  "nervous",
+  "question",
+];
 
 const noButtonMessages = [
   "No",
@@ -38,13 +45,16 @@ export default function Home() {
   const router = useRouter();
   console.log(no);
 
-  const celebrationMediaUrl = "https://media.giphy.com/media/3o7TKz9bX9v9KzCnXK/giphy.gif";
-  const celebrationMessage = "Congratulations! You have reached the end of this page! 🎉";
-  
+  const celebrationMediaUrl =
+    "https://media.giphy.com/media/3o7TKz9bX9v9KzCnXK/giphy.gif";
+  const celebrationMessage =
+    "Congratulations! You have reached the end of this page! 🎉";
+
   switch (no) {
     case "1":
       return (
         <Temp1
+          title="Template 1"
           messages={messages}
           moods={moods}
           prev={false}
@@ -56,6 +66,7 @@ export default function Home() {
     case "2":
       return (
         <Temp2
+          title="Template 2"
           messages={messages}
           moods={moods}
           prev={false}
@@ -64,17 +75,7 @@ export default function Home() {
           celebrationMessage={celebrationMessage}
         />
       );
-    case "3":
-      return (
-        <Temp3
-          messages={messages}
-          moods={moods}
-          prev={false}
-          noButtonMessages={noButtonMessages}
-          celebrationMediaUrl={celebrationMediaUrl}
-          celebrationMessage={celebrationMessage}
-        />
-      );
+
     default:
       return <div>Default Template</div>;
   }
