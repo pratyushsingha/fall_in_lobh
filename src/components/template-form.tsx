@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import * as z from "zod";
 import { Plus, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -15,6 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title cannot be empty"),
@@ -27,16 +28,11 @@ const formSchema = z.object({
   domain: z.string().min(1, "domain cannot be empty"),
 });
 
-const geenrateRandomSubdomain = () => {
+const generateRandomSubdomain = () => {
   return Math.random().toString(36).substring(2, 7);
 };
-export function TemplateForm({
-  template,
-  setTemplate,
-}: {
-  template: [];
-  setTemplate: [];
-}) {
+
+export function TemplateForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,13 +41,27 @@ export function TemplateForm({
       noButtonMessages: [],
       celebrationMediaUrl: "",
       celebrationMessage: "",
-      subdomain: geenrateRandomSubdomain(),
+      subdomain: generateRandomSubdomain(),
       domain: "zenux.live",
     },
   });
 
+  // Watch the entire form state
+  const formValues = useWatch({
+    control: form.control,
+  });
+
+  // Update the parent component in real-time whenever form values change
+  useEffect(() => {
+    console.log(template)
+    if (formValues) {
+      setTemplate(formValues);
+    }
+  }, [formValues, setTemplate]);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    setTemplate(values); // Optionally, you can still call this on submit
   }
 
   return (

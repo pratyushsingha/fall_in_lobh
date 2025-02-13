@@ -1,5 +1,6 @@
 "use client";
 
+<<<<<<< Updated upstream
 import Iphone15Pro from "./magicui/iphone-15-pro";
 // import Image from "next/image";
 // import { Button } from "@/components/ui/button";
@@ -8,6 +9,11 @@ import Iphone15Pro from "./magicui/iphone-15-pro";
 import Temp1 from "./template/Temp1";
 
 // const classname = "px-1 overflow-hidden h-[300] w-[300] md:h-[600] md:w-[300] translate-x-7 md:translate-x-0";
+=======
+import PreWindow from "./PreWindow";
+import Temp1 from "./template/Temp1";
+
+>>>>>>> Stashed changes
 const messages = [
   `Welcome,bro 👑`,
   `Your presence brightens my day...`,
@@ -17,7 +23,18 @@ const messages = [
   `Will you be my Valentine? 🌹`,
 ];
 
+<<<<<<< Updated upstream
 const moods = ["superHappy", "excited", "happy", "hopeful", "nervous", "question"];
+=======
+const moods = [
+  "superHappy",
+  "excited",
+  "happy",
+  "hopeful",
+  "nervous",
+  "question",
+];
+>>>>>>> Stashed changes
 
 const noButtonMessages = [
   "No",
@@ -35,12 +52,23 @@ const noButtonMessages = [
   "Change of heart?",
   "Wouldn't you reconsider?",
 ];
+<<<<<<< Updated upstream
 const celebrationMediaUrl = "https://media.giphy.com/media/3o7TKz9bX9v9KzCnXK/giphy.gif";
 const celebrationMessage = "Congratulations! You have reached the end of this page! 🎉";
+=======
+
+const celebrationMediaUrl =
+  "https://media.giphy.com/media/3o7TKz9bX9v9KzCnXK/giphy.gif";
+const celebrationMessage =
+  "Congratulations! You have reached the end of this page! 🎉";
+>>>>>>> Stashed changes
 
 export function TemplatePreview({ template }) {
+  console.log(template.messages);
+
   return (
     <div className="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl overflow-hidden">
+<<<<<<< Updated upstream
       <div className="w-[148px] h-[18px] bg-gray-800 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute overflow-hidden z-60"></div>
       <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg overflow-hidden z-90"></div>
       <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg overflow-hidden z-60"></div>
@@ -57,10 +85,30 @@ export function TemplatePreview({ template }) {
               celebrationMessage={celebrationMessage}
             />
 
+=======
+      <div className="w-[148px] h-[18px] bg-gray-800 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute overflow-hidden"></div>
+      <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg overflow-hidden"></div>
+      <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg overflow-hidden"></div>
+      <div className="h-[64px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg overflow-hidden"></div>
+      <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white">
+        <div className="overflow-hidden">
+          {/* <PreWindow> */}
+            <Temp1
+              title={template.title}
+              messages={template.messages} // Corrected typo here
+              moods={template.moods}
+              prev={true}
+              noButtonMessages={template.noButtonMessages}
+              celebrationMediaUrl={template.celebrationMediaUrl}
+              celebrationMessage={template.celebrationMessage}
+            />
+          {/* </PreWindow> */}
+>>>>>>> Stashed changes
         </div>
       </div>
     </div>
   );
+<<<<<<< Updated upstream
 }
 
 // import Iphone15Pro from "@/registry/magicui/iphone-15-pro";
@@ -81,3 +129,6 @@ export function TemplatePreview({ template }) {
 //     </div>
 //   );
 // }
+=======
+}
+>>>>>>> Stashed changes

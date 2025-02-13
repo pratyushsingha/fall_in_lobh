@@ -4,8 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { Heart, Sparkles, XCircle, Code } from "lucide-react";
 import Image from "next/image";
+<<<<<<< Updated upstream
 // import { boolean } from "zod";
 // import { p, pre } from "framer-motion/client";
+=======
+>>>>>>> Stashed changes
 
 interface Sparkle {
   id: number;
@@ -14,6 +17,7 @@ interface Sparkle {
 }
 
 interface Temp1Props {
+  title: "";
   messages: string[];
   moods: string[];
   prev: boolean;
@@ -36,7 +40,17 @@ const Logo = ({ prev = false }: { prev: boolean }) => (
   </div>
 );
 
+<<<<<<< Updated upstream
 const EmotiveFace = ({ mood = "happy", noCount = 0, prev = false }: { mood?: string; noCount?: number; prev?: boolean }) => {
+=======
+const EmotiveFace = ({
+  mood = "happy",
+  noCount = 0,
+}: {
+  mood?: string;
+  noCount?: number;
+}) => {
+>>>>>>> Stashed changes
   const expressions: Record<string, string> = {
     superHappy: "🥰",
     happy: "😊",
@@ -268,7 +282,15 @@ const textVariants = {
   },
 };
 
-export default function Temp1({ messages, moods, prev = false, noButtonMessages, celebrationMediaUrl, celebrationMessage }: Temp1Props) {
+export default function Temp1({
+  title,
+  messages,
+  moods,
+  prev = false,
+  noButtonMessages,
+  celebrationMediaUrl,
+  celebrationMessage,
+}: Temp1Props) {
   const [step, setStep] = useState(0);
   const [showEmojis, setShowEmojis] = useState(false);
   const [sparkles, setSparkles] = useState<Sparkle[]>([]);
@@ -289,7 +311,7 @@ export default function Temp1({ messages, moods, prev = false, noButtonMessages,
       }, 4000);
       return () => clearInterval(timer);
     }
-  }, [showEmojis, messages.length]);
+  }, [showEmojis, messages?.length]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (Math.random() > 0.8) {
@@ -302,6 +324,15 @@ export default function Temp1({ messages, moods, prev = false, noButtonMessages,
     }
     setMousePos({ x: e.clientX, y: e.clientY });
   };
+  console.log(messages);
+
+  if (!messages || messages.length === 0) {
+    return <div>No messages to display.</div>;
+  }
+
+  if (step >= messages.length) {
+    return <div>Invalid step.</div>;
+  }
 
   const handleNoButtonHover = async () => {
     const rect = noButtonRef.current?.getBoundingClientRect();
@@ -325,11 +356,22 @@ export default function Temp1({ messages, moods, prev = false, noButtonMessages,
   if (!showEmojis) {
     return (
       <div
-        className={`flex items-center justify-center p-4 overflow-hidden bg-gradient-to-br from-pink-400 to-pink-600 ${prev ? "min-h-[60dvh]" : "min-h-[100dvh]"}`}
+        className={`flex items-center justify-center p-4 overflow-hidden bg-gradient-to-br from-pink-400 to-pink-600 ${
+          prev ? "min-h-[60dvh]" : "min-h-[100dvh]"
+        }`}
         onMouseMove={handleMouseMove}
       >
+<<<<<<< Updated upstream
         <Logo prev={prev} />
         <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center relative">
+=======
+        <Logo />
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="text-center relative"
+        >
+>>>>>>> Stashed changes
           {sparkles.map((sparkle) => (
             <SparkleEffect key={sparkle.id} x={sparkle.x} y={sparkle.y} />
           ))}
@@ -361,8 +403,16 @@ export default function Temp1({ messages, moods, prev = false, noButtonMessages,
   }
 
   return (
+<<<<<<< Updated upstream
     <div className={`${prev ? "min-h-[60dvh]" : "min-h-[100dvh]"} overflow-hidden relative bg-gradient-to-br from-pink-400 to-pink-600`} onMouseMove={handleMouseMove}>
       <Logo prev={prev} />
+=======
+    <div
+      className="min-h-[100dvh] overflow-hidden relative bg-gradient-to-br from-pink-400 to-pink-600"
+      onMouseMove={handleMouseMove}
+    >
+      <Logo />
+>>>>>>> Stashed changes
       {sparkles.map((sparkle) => (
         <SparkleEffect key={sparkle.id} x={sparkle.x} y={sparkle.y} />
       ))}
@@ -372,7 +422,11 @@ export default function Temp1({ messages, moods, prev = false, noButtonMessages,
       ))}
 
       {Array.from({ length: 6 }).map((_, i) => (
-        <FloatingEmoji key={`emoji-${i}`} emoji={emojis[i % emojis.length]} delay={i * 0.3} />
+        <FloatingEmoji
+          key={`emoji-${i}`}
+          emoji={emojis[i % emojis.length]}
+          delay={i * 0.3}
+        />
       ))}
 
       <AnimatePresence mode="wait">
@@ -388,21 +442,38 @@ export default function Temp1({ messages, moods, prev = false, noButtonMessages,
           }}
           className="absolute inset-0 flex items-center justify-center p-4"
         >
-          <motion.div className="text-center text-white" initial={{ y: 20, rotateX: 90 }} animate={{ y: 0, rotateX: 0 }} transition={{ type: "spring", stiffness: 200 }}>
+          <motion.div
+            className="text-center text-white"
+            initial={{ y: 20, rotateX: 90 }}
+            animate={{ y: 0, rotateX: 0 }}
+            transition={{ type: "spring", stiffness: 200 }}
+          >
             <EmotiveFace mood={moods[step]} noCount={noCount} />
+<<<<<<< Updated upstream
             <motion.div className="perspective-text ">
               {Array.from(messages[step]).map((char, i) =>
                 char === " " ? (
                   <span key={i} className={`inline-block ${prev ? "w-1" : "w-4 md:w-6"}`} />
+=======
+            <motion.div className="perspective-text">
+              {Array.from(messages[step]).map((char, index) =>
+                char === " " ? (
+                  <span key={index} className="inline-block w-6" />
+>>>>>>> Stashed changes
                 ) : (
                   <motion.span
-                    key={i}
+                    key={index}
                     variants={textVariants}
                     initial="initial"
                     animate="animate"
                     exit="exit"
+<<<<<<< Updated upstream
                     custom={i}
                     className={`inline-block font-bold ${prev ? "text-xl md:text-2xl" : "text-4xl md:text-6xl"}`}
+=======
+                    custom={index}
+                    className="inline-block text-4xl md:text-6xl font-bold"
+>>>>>>> Stashed changes
                     style={{
                       textShadow: "0 0 20px rgba(255,255,255,0.2)",
                       fontFamily: "'Noto Color Emoji', sans-serif",
@@ -433,7 +504,10 @@ export default function Temp1({ messages, moods, prev = false, noButtonMessages,
                   }}
                   whileTap={{ scale: 0.9 }}
                   animate={{
-                    scale: yesButtonScales[Math.min(noCount, yesButtonScales.length - 1)],
+                    scale:
+                      yesButtonScales[
+                        Math.min(noCount, yesButtonScales.length - 1)
+                      ],
                   }}
                   className={` rounded-full bg-white text-pink-500 font-bold  flex items-center gap-2 shadow-lg hover:shadow-xl transition-shadow ${
                     prev ? "text-xl px-2 py-2" : "text-2xl px-8 py-4"
@@ -455,7 +529,11 @@ export default function Temp1({ messages, moods, prev = false, noButtonMessages,
                   whileHover={{ scale: 1.1 }}
                 >
                   <XCircle className="w-6 h-6" />
-                  {noButtonMessages[Math.min(noCount, noButtonMessages.length - 1)]}
+                  {
+                    noButtonMessages[
+                      Math.min(noCount, noButtonMessages.length - 1)
+                    ]
+                  }
                 </motion.button>
               </motion.div>
             )}
@@ -466,6 +544,7 @@ export default function Temp1({ messages, moods, prev = false, noButtonMessages,
       <AnimatePresence>
         {showCelebration && (
           <CelebrationPopup
+<<<<<<< Updated upstream
             onClose={() => {
               setShowCelebration(false);
               setStep(0);
@@ -473,6 +552,11 @@ export default function Temp1({ messages, moods, prev = false, noButtonMessages,
             celebrationMediaUrl={celebrationMediaUrl}
             celebrationMessage={celebrationMessage}
             prev={prev}
+=======
+            onClose={() => setShowCelebration(false)}
+            celebrationMediaUrl={celebrationMediaUrl}
+            celebrationMessage={celebrationMessage}
+>>>>>>> Stashed changes
           />
         )}
       </AnimatePresence>
