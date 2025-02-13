@@ -1,7 +1,7 @@
 "use client";
 import { TemplatePreview } from "@/components/template-preview";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import * as z from "zod";
 import { useForm, useWatch } from "react-hook-form";
 import { Input } from "@/components/ui/input";
@@ -21,7 +21,13 @@ import {
 import { Loader, Plus, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title cannot be empty"),
@@ -59,6 +65,24 @@ const CreateWebPage = () => {
     getTemplateDetails();
   }, []);
 
+  const EMOJI_OPTIONS = [
+    { label: "superHappy", imoji: "🥰", value: "superHappy" },
+    { label: "happy", imoji: "😊", value: "happy" },
+    { label: "excited", imoji: "😍", value: "excited" },
+    { label: "hopeful", imoji: "🤗", value: "hopeful" },
+    { label: "nervous", imoji: "😅", value: "nervous" },
+    { label: "question", imoji: "🤔", value: "question" },
+    { label: "inocent", imoji: "😇", value: "inocent" },
+    { label: "excited2", imoji: "🥳", value: "excited2" },
+    { label: "horny", imoji: "😏", value: "horny" },
+    { label: "heart", imoji: "❤️", value: "heart" },
+    { label: "sad1", imoji: "😕", value: "sad1" },
+    { label: "sad2", imoji: "😢", value: "sad2" },
+    { label: "sad3", imoji: "😭", value: "sad3" },
+    { label: "sad4", imoji: "🥺", value: "sad4" },
+    { label: "celebration", imoji: "🤩", value: "celebration" },
+  ];
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -77,10 +101,75 @@ const CreateWebPage = () => {
     control: form.control,
   });
 
+  const MessageWithMood = ({ messageIndex }: { messageIndex: number }) => {
+    return (
+      <div className="flex gap-2">
+        <div className="flex-1">
+          <FormField
+            control={form.control}
+            name={`messages.${messageIndex}`}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input placeholder="Enter message..." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="w-32">
+          <FormField
+            control={form.control}
+            name={`moods.${messageIndex}`}
+            render={({ field }) => (
+              <FormItem>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Mood" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {EMOJI_OPTIONS.map((emoji) => (
+                      <SelectItem key={emoji.value} value={emoji.value}>
+                        {emoji.imoji} {emoji.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <Button
+          onClick={() => {
+            const newMessages = [...form.getValues("messages")];
+            const newMoods = [...form.getValues("moods")];
+            newMessages.splice(messageIndex, 1);
+            newMoods.splice(messageIndex, 1);
+            form.setValue("messages", newMessages);
+            form.setValue("moods", newMoods);
+          }}
+          type="button"
+          variant="destructive"
+          size="icon"
+        >
+          <X className="w-4 h-4" />
+        </Button>
+      </div>
+    );
+  };
+
   const getTemplateDetails = async () => {
     try {
       const response = await axios.get(`/api/website?query=${templateId}`);
       console.log(response.data.website);
+
       setTemplate({
         title: response.data.website.title,
         moods: response.data.website.moods,
@@ -88,6 +177,8 @@ const CreateWebPage = () => {
         noButtonMessages: response.data.website.noButtonMessages,
         celebrationMediaUrl: response.data.website.celebrationMediaUrl,
         celebrationMessage: response.data.website.celebrationMessage,
+        subdomain: generateRandomSubdomain(),
+        domain: "zenux.live",
       });
       form.reset({
         title: response.data.website.title,
@@ -108,7 +199,16 @@ const CreateWebPage = () => {
   useEffect(() => {
     if (formValues) {
       console.log(formValues);
-      setTemplate(formValues);
+      setTemplate({
+        title: formValues.title || "",
+        moods: formValues.moods || [],
+        messages: formValues.messages || [],
+        noButtonMessages: formValues.noButtonMessages || [],
+        celebrationMediaUrl: formValues.celebrationMediaUrl || "",
+        celebrationMessage: formValues.celebrationMessage || "",
+        subdomain: formValues.subdomain || generateRandomSubdomain(),
+        domain: formValues.domain || "zenux.live",
+      });
       console.log(template);
     }
   }, [formValues, setTemplate]);
@@ -178,105 +278,31 @@ const CreateWebPage = () => {
                         </FormItem>
                       )}
                     />
-                    <h3 className="font-semibold">Moods</h3>
-                    {form.watch("moods").map((_, index) => (
-                      <FormField
-                        key={index}
-                        control={form.control}
-                        name={`moods.${index}`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <div className="flex gap-2">
-                                <Input placeholder="Enter mood..." {...field} />
-                                <Button
-                                  onClick={() => {
-                                    const newMoods = [
-                                      ...form.getValues("moods"),
-                                    ];
-                                    newMoods.splice(index, 1);
-                                    form.setValue("moods", newMoods);
-                                  }}
-                                  type="button"
-                                  variant="destructive"
-                                  size="icon"
-                                >
-                                  <X className="w-4 h-4" />
-                                </Button>
-                              </div>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    ))}
-                    <Button
-                      onClick={() =>
-                        form.setValue("moods", [...form.getValues("moods"), ""])
-                      }
-                      type="button"
-                      size="sm"
-                      variant="outline"
-                    >
-                      <Plus className="w-4 h-4 mr-2" />
-                      Add Mood
-                    </Button>
+                    <div className="space-y-4">
+                      <h3 className="font-semibold">Messages</h3>
+                      {form.watch("messages").map((_, index) => (
+                        <MessageWithMood key={index} messageIndex={index} />
+                      ))}
+                      <Button
+                        onClick={() => {
+                          form.setValue("messages", [
+                            ...form.getValues("messages"),
+                            "",
+                          ]);
+                          form.setValue("moods", [
+                            ...form.getValues("moods"),
+                            "",
+                          ]);
+                        }}
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                      >
+                        <Plus className="w-4 h-4 mr-2" />
+                        Add Message
+                      </Button>
+                    </div>
                   </div>
-
-                  <Separator className="my-4" />
-
-                  <div className="space-y-4">
-                    <h3 className="font-semibold">Messages</h3>
-                    {form.watch("messages").map((_, index) => (
-                      <FormField
-                        key={index}
-                        control={form.control}
-                        name={`messages.${index}`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <div className="flex gap-2">
-                                <Input
-                                  placeholder="Enter message..."
-                                  {...field}
-                                />
-                                <Button
-                                  onClick={() => {
-                                    const newMessages = [
-                                      ...form.getValues("messages"),
-                                    ];
-                                    newMessages.splice(index, 1);
-                                    form.setValue("messages", newMessages);
-                                  }}
-                                  type="button"
-                                  variant="destructive"
-                                  size="icon"
-                                >
-                                  <X className="w-4 h-4" />
-                                </Button>
-                              </div>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    ))}
-                    <Button
-                      onClick={() =>
-                        form.setValue("messages", [
-                          ...form.getValues("messages"),
-                          "",
-                        ])
-                      }
-                      type="button"
-                      size="sm"
-                      variant="outline"
-                    >
-                      <Plus className="w-4 h-4 mr-2" />
-                      Add Message
-                    </Button>
-                  </div>
-
                   <Separator className="my-4" />
 
                   <div className="space-y-4">
@@ -421,4 +447,12 @@ const CreateWebPage = () => {
   );
 };
 
-export default CreateWebPage;
+const page = () => {
+  return (
+    <Suspense>
+      <CreateWebPage />
+    </Suspense>
+  );
+};
+
+export default page;
