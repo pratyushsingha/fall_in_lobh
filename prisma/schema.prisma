@@ -14,14 +14,14 @@ datasource db {
 }
 
 model website {
-  id             Int      @id @default(autoincrement())
-  title          String
-  gif_url        String   @default("https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdDZ3eWNqemdvMmdsamFvajZmb3l2azd6Zzl0ZHM3eGE0MTB3cDYxZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oz8xFyn0emm4qvvAA/giphy.gif")
-  yesBtnClickTxt String
-  yesBtnTxt      String
-  subtitle       String?
-  noBtnPhrases   String[]
-  webUrl         String   @unique
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id                  Int      @id @default(autoincrement())
+  title               String
+  moods               String[]
+  messages            String[]
+  celebrationMediaUrl String
+  celebrationMessage  String
+  noButtonMessages    String[]
+  webUrl              String   @unique
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 }

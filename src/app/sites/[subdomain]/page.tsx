@@ -1,6 +1,9 @@
+"use client";
 import Temp1 from "@/components/template/Temp1";
-import React from "react";
-
+import { useParams } from "next/navigation";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 const messages = [
   `Welcome, ok 👑`,
   `Your presence brightens my day...`,
@@ -37,18 +40,36 @@ const noButtonMessages = [
 ];
 
 export default function Home() {
+  const { subdomain } = useParams();
+  const router = useRouter();
+  console.log(subdomain);
+  const [siteDetails, setSiteDetails] = useState({});
+  const getSiteDetails = async () => {
+    try {
+      const response = await axios.get(`/api/website?query=${subdomain}`);
+      console.log(response.data.website);
+      setSiteDetails(response.data.website);
+    } catch (error) {
+      console.error("Error fetching site details:", error);
+      router.push("/404");
+    }
+  };
+
+  useEffect(() => {
+    getSiteDetails();
+  }, []);
   const celebrationMediaUrl =
     "https://media.giphy.com/media/3o7TKz9bX9v9KzCnXK/giphy.gif";
   const celebrationMessage =
     "Congratulations! You have reached the end of this page! 🎉";
   return (
     <Temp1
-      messages={messages}
-      moods={moods}
+      messages={siteDetails?.messages}
+      moods={siteDetails?.moods}
       prev={false}
-      noButtonMessages={noButtonMessages}
-      celebrationMediaUrl={celebrationMediaUrl}
-      celebrationMessage={celebrationMessage}
+      noButtonMessages={siteDetails?.noButtonMessages}
+      celebrationMediaUrl={siteDetails?.celebrationMediaUrl}
+      celebrationMessage={siteDetails?.celebrationMessage}
     />
   );
 }

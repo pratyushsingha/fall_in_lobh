@@ -60,7 +60,7 @@ export async function GET(req: NextRequest) {
       where: {
         OR: [
           { id: !isNaN(Number(query)) ? parseInt(query) : undefined },
-          { webUrl: query },
+          { webUrl: `https://${query}.zenux.live` },
         ],
       },
     });
