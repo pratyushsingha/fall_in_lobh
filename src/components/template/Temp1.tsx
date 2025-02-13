@@ -391,7 +391,7 @@ export default function Temp1({ title, messages, moods, prev = false, noButtonMe
   }
 
   return (
-    <div className={`${prev ? "min-h-[60dvh]" : "min-h-[100dvh]"} overflow-hidden relative bg-gradient-to-br from-pink-400 to-pink-600`} onMouseMove={handleMouseMove}>
+    <div className={`${prev ? "h-[60dvh]" : "min-h-[100dvh]"} overflow-hidden relative bg-gradient-to-br from-pink-400 to-pink-600`} onMouseMove={handleMouseMove}>
       <Logo prev={prev} />
 
       {sparkles.map((sparkle) => (

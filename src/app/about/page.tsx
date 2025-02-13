@@ -7,8 +7,8 @@ export default function AboutPage() {
   const teamMembers = [
     {
       image: "https://i.postimg.cc/wx5hC89X/zenux.jpg",
-      name: "Team Member 1",
-      github: "https://github.com/member1",
+      name: "Zenux Studios",
+      github: "https://github.com/Zenux-Studios",
     },
   ];
 
@@ -35,18 +35,18 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
             Our Team
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mx-auto max-w-md">
             {teamMembers.map((member, index) => (
               <Card key={index} className="hover:shadow-lg transition-shadow">
-                <CardHeader className="text-center">
+                <CardHeader className="text-center flex flex-col items-center gap-4 p-6">
                   <Image
-                    className="rounded-full w-20 h-20 text-center"
+                    className="rounded-full w-28 h-28 text-center"
                     src={member.image}
                     width={200}
                     height={200}
                     alt="zenux studios"
                   />
-                  <h3 className="text-xl font-semibold text-gray-800">
+                  <h3 className="text-4xl font-semibold text-gray-800">
                     {member.name}
                   </h3>
                 </CardHeader>
