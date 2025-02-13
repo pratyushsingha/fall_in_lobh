@@ -79,30 +79,30 @@ export default function Home() {
           celebrationMessage={celebrationMessage}
         />
       );
-    case "3":
-      return (
-        <Temp3
-          title={title}
-          messages={messages}
-          moods={moods}
-          prev={false}
-          noButtonMessages={noButtonMessages}
-          celebrationMediaUrl={celebrationMediaUrl}
-          celebrationMessage={celebrationMessage}
-        />
-      );
-    case "4":
-      return (
-        <Temp4
-          title={title}
-          messages={messages}
-          moods={moods}
-          prev={false}
-          noButtonMessages={noButtonMessages}
-          celebrationMediaUrl={celebrationMediaUrl}
-          celebrationMessage={celebrationMessage}
-        />
-      );
+    // case "3":
+    //   return (
+    //     <Temp3
+    //       title={title}
+    //       messages={messages}
+    //       moods={moods}
+    //       prev={false}
+    //       noButtonMessages={noButtonMessages}
+    //       celebrationMediaUrl={celebrationMediaUrl}
+    //       celebrationMessage={celebrationMessage}
+    //     />
+    //   );
+    // case "4":
+    //   return (
+    //     <Temp4
+    //       title={title}
+    //       messages={messages}
+    //       moods={moods}
+    //       prev={false}
+    //       noButtonMessages={noButtonMessages}
+    //       celebrationMediaUrl={celebrationMediaUrl}
+    //       celebrationMessage={celebrationMessage}
+    //     />
+    //   );
     default:
       return <div>Default Template</div>;
   }
