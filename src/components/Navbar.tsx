@@ -1,11 +1,11 @@
-import Link from 'next/link';
-import React from 'react'
+import Link from "next/link";
+import React from "react";
 
 export default function Navbar() {
   return (
     <div className="shadow-md mb-4">
       <header className="p-4 flex justify-between items-center w-full md:w-[90%] mx-auto texture mb-4">
-        <h1 className="text-2xl font-bold text-pink-600">Will you be my valentine?</h1>
+        <h1 className="text-2xl font-bold text-pink-600">Bonjure Valentine!!! 🫶</h1>
         <nav className="space-x-4">
           <Link href="/" className="text-pink-600 hover:text-pink-700">
             Home
