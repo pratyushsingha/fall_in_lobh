@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Temp2 from "@/components/template/Temp2";
 const messages = [
   `Welcome, ok 👑`,
   `Your presence brightens my day...`,
@@ -63,7 +64,7 @@ export default function Home() {
   const celebrationMessage =
     "Congratulations! You have reached the end of this page! 🎉";
   return (
-    <Temp1
+    <Temp2
       messages={siteDetails?.messages}
       moods={siteDetails?.moods}
       prev={false}
