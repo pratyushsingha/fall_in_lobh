@@ -34,7 +34,7 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="h-screen max-w-7xl md:max-w-screen-2xl mx-auto  overflow-hidden">
+    <div className="h-screen max-w-7xl md:max-w-screen-2xl mx-auto ">
       <main className="mx-auto">
         <div className="flex flex-col justify-center items-center mt-10 sm:mt-20">
           <h1 className="text-2xl sm:text-3xl lg:text-6xl font-bold tracking-tighter text-center">
