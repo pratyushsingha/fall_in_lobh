@@ -53,9 +53,20 @@ export default function Home() {
           celebrationMessage={celebrationMessage}
         />
       );
-    case "3":
+    case "2":
       return (
         <Temp2
+          messages={messages}
+          moods={moods}
+          prev={false}
+          noButtonMessages={noButtonMessages}
+          celebrationMediaUrl={celebrationMediaUrl}
+          celebrationMessage={celebrationMessage}
+        />
+      );
+    case "3":
+      return (
+        <Temp3
           messages={messages}
           moods={moods}
           prev={false}
