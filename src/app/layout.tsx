@@ -34,7 +34,7 @@ export default function RootLayout({
         <Toaster />
         <Script
           defer
-          data-domain="https://zenux.live"
+          data-domain="https://fall-in-lobh-nu.vercel.app"
           src="https://insightbolt.vercel.app/tracking-script.js"
         />
 
